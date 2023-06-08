@@ -1,10 +1,12 @@
 import styles from './HomePage.module.css'
+import Image from 'next/image'
+import main from '../../../public/image/main.jpeg'
 
 
 export default function HomePage (){
     return (
    <>
-   <h1>golovna</h1>
+   <Image src={main} alt='main' className={styles.main}/>
    </>
     )
 }

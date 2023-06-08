@@ -6,5 +6,6 @@
 }
 .links{
     display: flex;
+    padding-right: 20px;
     gap: 10px;
 }
