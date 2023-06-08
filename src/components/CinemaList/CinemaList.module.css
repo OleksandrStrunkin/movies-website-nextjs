@@ -1,0 +1,14 @@
+.list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    @media screen and (min-width: 1280px) {
+        list-style: none;
+        gap: 0;
+        justify-content: space-between;
+      }
+}
