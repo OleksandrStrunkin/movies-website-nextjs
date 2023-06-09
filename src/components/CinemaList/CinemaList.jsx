@@ -15,7 +15,6 @@ export default function CinemaList() {
       try {
         const result = await getMoviesList();
         setItems(result.results);
-        console.log(result.results)
       } catch (error) {
         setError(error);
       } finally {
