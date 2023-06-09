@@ -15,6 +15,7 @@ export default function CinemaList() {
       try {
         const result = await getMoviesList();
         setItems(result.results);
+        console.log(result.results)
       } catch (error) {
         setError(error);
       } finally {
@@ -33,6 +34,8 @@ export default function CinemaList() {
               id={item.id}
               poster={`https://image.tmdb.org/t/p/w300${item.poster_path}`}
               title={item.original_title || item.name}
+              overview={item.overview}
+              rate={item.vote_average}
             />
           ))}
       </ul>
