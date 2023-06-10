@@ -38,3 +38,10 @@ export async function getSearchMovies(value) {
   );
   return data;
 }
+
+export async function getMovieVideo(id) {
+  const { data } = await instance.get(
+    `/movie/${id}/videos?api_key=${KEY}&language=en-US`
+  );
+  return data;
+}
