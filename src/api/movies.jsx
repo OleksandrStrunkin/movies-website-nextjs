@@ -41,7 +41,7 @@ export async function getSearchMovies(value) {
 
 export async function getMovieVideo(id) {
   const { data } = await instance.get(
-    `/movie/${id}/videos?api_key=${KEY}&language=en-US`
+    `/movie/${id}/images?api_key=${KEY}`
   );
   return data;
 }

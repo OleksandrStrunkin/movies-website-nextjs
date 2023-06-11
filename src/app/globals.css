@@ -28,10 +28,10 @@ body {
 
 body {
   color: var(--text-color);
-  background-image: url('../../public/image/movie-background-collage.jpg');
+  /* background-image: url('../../public/image/movie-background-collage.jpg'); */
   background-size: cover;
   background-repeat: no-repeat;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #967E76;
 }
 /* 
 body::after {
