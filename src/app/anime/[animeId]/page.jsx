@@ -1,15 +1,15 @@
 "use client";
-import { getMovieItem, getCast, getMovieVideo } from "@/api/movies";
+import { getAnimeItem, getAnimeCharacter } from "@/api/anime";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import styles from "./cinemaId.module.css";
+import styles from "./animeId.module.css";
 import photoProfile from "../../../../public/image/photoProfile.svg";
 
 const MAX_VISIBLE_ACTORS = 5;
 
-export default function CinemaDetails({ params }) {
-  const { cinemaId } = params;
-  const [item, setItem] = useState({});
+export default function AnimeDetails({ params }) {
+  const { animeId } = params;
+  const [item, setItem] = useState(null);
 
   const [cast, setCast] = useState([]);
   const [visibleActors, setVisibleActors] = useState(MAX_VISIBLE_ACTORS);
@@ -19,66 +19,68 @@ export default function CinemaDetails({ params }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchMovie = async () => {
+    const fetchAnime = async () => {
       setLoading(true);
       try {
-        const result = await getMovieItem(cinemaId);
-        setItem(result);
+        const result = await getAnimeItem(animeId);
+        setItem(result.data.attributes);
       } catch (error) {
         setError(error);
       } finally {
         setLoading(false);
       }
     };
-    fetchMovie();
-  }, [cinemaId, setError, setItem, setLoading]);
+    fetchAnime();
+  }, [animeId, setError, setItem, setLoading]);
 
   useEffect(() => {
-    const fetchCast = async () => {
+    const fetchCharacter = async () => {
       setLoading(true);
       try {
-        const result = await getCast(cinemaId);
-        setCast(result.cast);
+        const result = await getAnimeCharacter(animeId);
+        setCast(result.data.attributes);
+        console.log(result)
       } catch (error) {
         setError(error);
       } finally {
         setLoading(false);
       }
     };
-    fetchCast();
-  }, [cinemaId, setError, setCast, setLoading]);
+    fetchCharacter();
+  }, [setError, setCast, setLoading, animeId]);
 
-  const handleToggleActors = () => {
-    setHideActors(!hideActors);
-    if (hideActors) {
-      setVisibleActors(cast.length);
-    } else {
-      setVisibleActors(MAX_VISIBLE_ACTORS);
+//   const handleToggleActors = () => {
+//     setHideActors(!hideActors);
+//     if (hideActors) {
+//       setVisibleActors(cast.length);
+//     } else {
+//       setVisibleActors(MAX_VISIBLE_ACTORS);
+//     }
+//   };
+    if(!item){
+      return
     }
-  };
 
   return (
     <div className={styles.movieDetails}>
       <div className={styles.poster}>
-        <Image
-          src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+         <Image
+          src={item.posterImage.large}
           width={500}
           height={750}
           alt="poster"
-          layout="responsive"
-          objectFit="cover"
         />
       </div>
       <section className={styles.main}>
         <div className={styles.info}>
-          <h1>{item.original_title || item.name}</h1>
+          <h1>{item.canonicalTitle}</h1>
           <p>{item.release_date}</p>
         </div>
         <div className={styles.section}>
           <h2 className={styles.descr}>Description:</h2>
-          <p>{item.overview}</p>
+          <p>{item.description}</p>
         </div>
-        <div className={styles.section}>
+        {/* <div className={styles.section}>
           <h2 className={styles.titleCast}>Cast:</h2>
           <ul className={styles.cast}>
             {cast &&
@@ -88,14 +90,14 @@ export default function CinemaDetails({ params }) {
                     <Image
                       src={
                         actor.profile_path
-                          ? `https://www.themoviedb.org/t/p/w138_and_h175_face${actor.profile_path}`
+                          ? cast.image.original
                           : photoProfile
                       }
                       width={138}
                       height={175}
                       alt={`${actor.name}`}
                     />
-                    {actor.name}
+                    {cast.canonicalName}
                   </li>
                 )
               )}
@@ -110,7 +112,7 @@ export default function CinemaDetails({ params }) {
           <a href={item.homepage} target="_blank" rel="noopener noreferrer">
             Visit Official Website
           </a>
-        </div>
+        </div> */}
       </section>
       {loading && <p>Loading......</p>}
     </div>
