@@ -24,6 +24,7 @@ export default function AnimeDetails({ params }) {
       try {
         const result = await getAnimeItem(animeId);
         setItem(result.data.attributes);
+        console.log(result.data.attributes)
       } catch (error) {
         setError(error);
       } finally {
@@ -33,21 +34,21 @@ export default function AnimeDetails({ params }) {
     fetchAnime();
   }, [animeId, setError, setItem, setLoading]);
 
-  useEffect(() => {
-    const fetchCharacter = async () => {
-      setLoading(true);
-      try {
-        const result = await getAnimeCharacter(animeId);
-        setCast(result.data.attributes);
-        console.log(result)
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCharacter();
-  }, [setError, setCast, setLoading, animeId]);
+  // useEffect(() => {
+  //   const fetchCharacter = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const result = await getAnimeCharacter(animeId);
+  //       setCast(result.data);
+  //       console.log(result)
+  //     } catch (error) {
+  //       setError(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchCharacter();
+  // }, [setError, setCast, setLoading, animeId]);
 
 //   const handleToggleActors = () => {
 //     setHideActors(!hideActors);
@@ -74,45 +75,12 @@ export default function AnimeDetails({ params }) {
       <section className={styles.main}>
         <div className={styles.info}>
           <h1>{item.canonicalTitle}</h1>
-          <p>{item.release_date}</p>
+          <p>{item.startDate}</p>
         </div>
         <div className={styles.section}>
           <h2 className={styles.descr}>Description:</h2>
           <p>{item.description}</p>
         </div>
-        {/* <div className={styles.section}>
-          <h2 className={styles.titleCast}>Cast:</h2>
-          <ul className={styles.cast}>
-            {cast &&
-              (hideActors ? cast.slice(0, visibleActors) : cast).map(
-                (actor) => (
-                  <li key={actor.id}>
-                    <Image
-                      src={
-                        actor.profile_path
-                          ? cast.image.original
-                          : photoProfile
-                      }
-                      width={138}
-                      height={175}
-                      alt={`${actor.name}`}
-                    />
-                    {cast.canonicalName}
-                  </li>
-                )
-              )}
-          </ul>
-          {cast.length > MAX_VISIBLE_ACTORS && (
-            <button onClick={handleToggleActors} className={styles.btn}>
-              {hideActors ? "Show More" : "Show Less"}
-            </button>
-          )}
-        </div>
-        <div className={styles.section}>
-          <a href={item.homepage} target="_blank" rel="noopener noreferrer">
-            Visit Official Website
-          </a>
-        </div> */}
       </section>
       {loading && <p>Loading......</p>}
     </div>

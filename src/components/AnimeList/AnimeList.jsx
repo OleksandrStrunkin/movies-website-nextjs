@@ -34,6 +34,8 @@ export default function AnimeList() {
               id={item.id}
               poster={item.attributes.posterImage.small}
               title={item.attributes.canonicalTitle}
+              overview={item.attributes.description}
+              rate={item.attributes.averageRating}
             />
           ))}
       </ul>
