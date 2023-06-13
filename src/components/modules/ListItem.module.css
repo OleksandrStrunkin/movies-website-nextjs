@@ -8,8 +8,9 @@
 
 
     border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    background-color: var(--card-color);
+    background-color: var(--main-color);
     color: var(--text-color);
     cursor: pointer;
   }
@@ -23,9 +24,10 @@
   }
   
   .title_film {
+    font-family: 'Alegreya Sans SC', sans-serif;
     font-size: 16px;
     min-height: 50px;
-    margin: 20px 5px;
+    margin: 15px 5px;
 
   }
 
@@ -48,9 +50,9 @@
 
     overflow: auto;
     padding: 0 10px;
-    background-color: rgba(195, 129, 84, 0.9);
+    background-color: rgba(136, 74, 57, 0.8);
     transform: translateY(0);
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
   }
   
   .film:hover .film_overlay {

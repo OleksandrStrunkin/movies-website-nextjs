@@ -58,17 +58,18 @@ export default function CinemaDetails({ params }) {
   };
 
   return (
-    <div className={styles.movieDetails}>
-      <div className={styles.poster}>
-        <Image
-          src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-          width={500}
-          height={750}
-          alt="poster"
-          layout="responsive"
-          objectFit="cover"
-        />
-      </div>
+    <div className={styles.movieDetails}>    
+        <div className={styles.poster}>
+          <Image
+            src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+            width={500}
+            height={750}
+            alt="poster"
+            layout="responsive"
+            objectFit="cover"
+            className={styles.posterImg}
+          />
+        </div>
       <section className={styles.main}>
         <div className={styles.info}>
           <h1>{item.original_title || item.name}</h1>
