@@ -23,6 +23,7 @@ export default function CinemaDetails({ params }) {
       setLoading(true);
       try {
         const result = await getMovieItem(cinemaId);
+        console.log(result)
         setItem(result);
       } catch (error) {
         setError(error);
@@ -61,12 +62,10 @@ export default function CinemaDetails({ params }) {
     <div className={styles.movieDetails}>    
         <div className={styles.poster}>
           <Image
-            src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-            width={500}
-            height={750}
+            src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2${item.poster_path}`}
+            width={600}
+            height={900}
             alt="poster"
-            layout="responsive"
-            objectFit="cover"
             className={styles.posterImg}
           />
         </div>
@@ -77,7 +76,7 @@ export default function CinemaDetails({ params }) {
         </div>
         <div className={styles.section}>
           <h2 className={styles.descr}>Description:</h2>
-          <p>{item.overview}</p>
+          <p className={styles.text}>{item.overview}</p>
         </div>
         <div className={styles.section}>
           <h2 className={styles.titleCast}>Cast:</h2>
@@ -96,7 +95,7 @@ export default function CinemaDetails({ params }) {
                       height={175}
                       alt={`${actor.name}`}
                     />
-                    {actor.name}
+                    <p className={styles.actor}>{actor.name}</p>
                   </li>
                 )
               )}
@@ -108,7 +107,7 @@ export default function CinemaDetails({ params }) {
           )}
         </div>
         <div className={styles.section}>
-          <a href={item.homepage} target="_blank" rel="noopener noreferrer">
+          <a href={item.homepage} target="_blank" rel="noopener noreferrer" className={styles.homepage}>
             Visit Official Website
           </a>
         </div>

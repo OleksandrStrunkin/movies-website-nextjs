@@ -34,30 +34,6 @@ export default function AnimeDetails({ params }) {
     fetchAnime();
   }, [animeId, setError, setItem, setLoading]);
 
-  // useEffect(() => {
-  //   const fetchCharacter = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const result = await getAnimeCharacter(animeId);
-  //       setCast(result.data);
-  //       console.log(result)
-  //     } catch (error) {
-  //       setError(error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   fetchCharacter();
-  // }, [setError, setCast, setLoading, animeId]);
-
-//   const handleToggleActors = () => {
-//     setHideActors(!hideActors);
-//     if (hideActors) {
-//       setVisibleActors(cast.length);
-//     } else {
-//       setVisibleActors(MAX_VISIBLE_ACTORS);
-//     }
-//   };
     if(!item){
       return
     }
@@ -79,7 +55,7 @@ export default function AnimeDetails({ params }) {
         </div>
         <div className={styles.section}>
           <h2 className={styles.descr}>Description:</h2>
-          <p>{item.description}</p>
+          <p className={styles.text}>{item.description}</p>
         </div>
       </section>
       {loading && <p>Loading......</p>}

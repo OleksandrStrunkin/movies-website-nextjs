@@ -1,6 +1,7 @@
 .movieDetails {
   display: flex;
   align-items: flex-start;
+  justify-content: space-around;
   margin-top: 10px;
 }
 
@@ -9,17 +10,18 @@
 }
 
 .poster {
-  width: 100%;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 2px solid var(--text-color);
 }
+
 .posterImg {
   height: auto;
-  max-width: 100%;
-  max-height: 100%;
+  width: 370px;
+  height: 570px;
 }
 
 .main {
@@ -38,6 +40,10 @@
   margin-bottom: 20px;
 }
 
+.text {
+  font-weight: 300;
+}
+
 .cast {
   list-style: none;
   display: flex;
@@ -52,7 +58,19 @@
   overflow: hidden;
 
   border: 1px solid var(--text-color);
-  background-color: var(--card-color);
+  background-color: var(--main-color);
+}
+
+.actor {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: calc(22/16);
+  text-align: center;
+  padding: 20px 5px;
+}
+
+.homepage:hover {
+  color: var(--main-color);
 }
 
 .btn {
@@ -65,11 +83,11 @@
   box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
     rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
   box-sizing: border-box;
-  color: #3c4043;
+  color: var(--card-color);
   cursor: pointer;
   display: inline-flex;
   fill: currentcolor;
-  font-family: "Google Sans", Roboto, Arial, sans-serif;
+  font-family: 'Alegreya Sans SC', sans-serif;
   font-size: 14px;
   font-weight: 500;
   height: 40px;
@@ -94,7 +112,7 @@
 
 .btn:hover {
   background: #f6f9fe;
-  color: #174ea6;
+  color: var(--card-color);
 }
 
 .btn:active {

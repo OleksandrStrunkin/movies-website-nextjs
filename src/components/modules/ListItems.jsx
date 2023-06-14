@@ -21,11 +21,11 @@ export default function ListItems ({poster, title, id, overview, rate}){
                   />
                   <div className={styles.film_overlay}>
                     <h3>Discription:</h3>
-                    <p>{overview}</p>
+                    <p className={styles.descr}>{overview}</p>
                     <p>Rate: {rate}</p>
                   </div>
                </div>
-                <p className={styles.title_film}>{title}</p>
+                <h2 className={styles.title_film}>{title}</h2>
              </Link>
             </li>
     )
