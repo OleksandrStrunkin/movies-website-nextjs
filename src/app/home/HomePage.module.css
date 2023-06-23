@@ -1,5 +1,11 @@
 .main{
-    min-width: 1280px;
-    min-height: 100vh;
+    position: relative;
+    /* width: 1280px; */
+    height: calc(100vh - 50px);
+}
 
+
+
+.poster{
+    border-radius: 10px;
 }

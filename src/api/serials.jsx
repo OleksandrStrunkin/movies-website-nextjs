@@ -10,3 +10,4 @@ export async function getSerialsList() {
   const { data } = await instance.get(`/tv/on_the_air?api_key=${KEY}`);
   return data;
 }
+
