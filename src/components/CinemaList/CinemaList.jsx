@@ -14,6 +14,7 @@ export default function CinemaList() {
       setLoading(true);
       try {
         const result = await getMoviesList();
+        console.log(result)
         setItems(result.results);
       } catch (error) {
         setError(error);
@@ -35,6 +36,7 @@ export default function CinemaList() {
               title={item.original_title || item.name}
               overview={item.overview}
               rate={item.vote_average}
+              rDate={item.release_date}
             />
           ))}
       </ul>
