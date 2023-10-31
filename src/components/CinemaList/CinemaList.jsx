@@ -26,7 +26,7 @@ export default function CinemaList() {
 
   return (
     <>
-         <ul className={styles.list}>
+         <ul className="grid gap-2 grid-cols-1 justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {items && items.map((item) => (
             <ListItems
               key={item.id}

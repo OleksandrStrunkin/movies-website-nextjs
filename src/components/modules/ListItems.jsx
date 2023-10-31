@@ -10,14 +10,15 @@ export default function ListItems ({poster, title, id, overview, rate}){
 
 
     return (         
-            <li key={id} className={styles.card}>
+            <li key={id} className="flex w-full mt-8 border border-slate-600 rounded-md">
              <Link href={`${adress}/${id}`}>
                <div className={styles.film}>
-                  <Image
+                  <img
                     src={poster}
                     alt="images"
-                    width={250}
-                    height={350}
+                  
+                   
+                    className="w-full object-cover object-center"
                   />
                   <div className={styles.film_overlay}>
                     <h3>Discription:</h3>
@@ -30,3 +31,11 @@ export default function ListItems ({poster, title, id, overview, rate}){
             </li>
     )
 }
+
+{/* <Image
+src={poster}
+alt="images"
+width={250}
+height={350}
+className="w-full object-cover object-center"
+/> */}

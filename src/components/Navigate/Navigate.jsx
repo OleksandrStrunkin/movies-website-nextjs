@@ -21,7 +21,7 @@ export default function Menu() {
   return (
     <>
       <nav className={styles.listNav}>
-        <Link href="/">
+        <Link href="/cinema">
           <Image className={styles.logo} src={Logo} alt="Logo" />
         </Link>
         <div className={styles.links}>
