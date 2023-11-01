@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import styles from "./ListItem.module.css";
-import Image from "next/image";
 
 export default function ListItems({
   poster,
@@ -10,48 +8,36 @@ export default function ListItems({
   overview,
   rate,
   rDate,
+  index
 }) {
   const router = usePathname();
   let adress = router.toString();
 
+  const dateObject = new Date(rDate);
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = dateObject.toLocaleDateString('en-GB', options);
+
   return (
     <li
       key={id}
-      className="flex w-full mt-8 border border-slate-600 rounded-md group hover:border-current transform duration-500"
+      className={`flex w-max h-max lg:h-72 mt-8 basis-1/2 hover:basis-full overflow-hidden border border-slate-600 rounded-md group hover:border-current transform duration-500`}
     >
       <Link href={`${adress}/${id}`}>
-        <div className="relative overflow-hidden">
+        <div className={`relative overflow-hidden`}>
           <img
             src={poster}
             alt="images"
-            className="w-full object-cover object-center group-hover:opacity-60 duration-500"
+            className="w-max h-[400px] lg:h-full object-center object-cover"
           />
-          <div
-            className="absolute flex flex-col items-start gap-2 p-2 
-          mt-0 h-max top-full left-0 w-full overflow-auto bg-opacity-90
-           bg-slate-600 transform translate-y-0 transition-transform duration-500 
-           group-hover:-translate-y-full"
-          >
-            <h3>Discription:</h3>
-            <p className="">{overview}</p>
-          </div>
         </div>
-        <div className="flex flex-col py-4 text-center">
-          <h2 className="group-hover:text-orange-200 duration-500">{title}</h2>
-          <p>{rDate}</p>
-          <p>Rate: {rate}</p>
+        <div className="flex flex-col py-2 text-center absolute top-0 right-0 w-full rounded-md bg-slate-600/90 translate-x-full group-hover:translate-x-0 duration-500">
+          <h2 className="text-xl">{title}</h2>
+          <p className="text-xs"><span className="mr-1">Date Release:</span>{formattedDate}</p>
+          <p className="text-xs">Rate: {rate}</p>
         </div>
       </Link>
     </li>
   );
 }
 
-{
-  /* <Image
-src={poster}
-alt="images"
-width={250}
-height={350}
-className="w-full object-cover object-center"
-/> */
-}
+// ${index === 0 ? "w-full": ""}

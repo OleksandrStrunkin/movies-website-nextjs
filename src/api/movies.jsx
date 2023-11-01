@@ -11,6 +11,16 @@ export async function getMoviesList() {
   return data;
 }
 
+export async function getMoviesListDay() {
+  const { data } = await instance.get(`/trending/all/day?api_key=${KEY}`);
+  return data;
+}
+
+export async function getMoviesCategory() {
+  const { data } = await instance.get(`/genre/movie/list?api_key=${KEY}`);
+  return data;
+}
+
 export async function getMovieItem(id) {
   const { data } = await instance.get(
     `/movie/${id}?api_key=${KEY}&language=en-US`
