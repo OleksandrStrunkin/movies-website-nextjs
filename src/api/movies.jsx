@@ -21,6 +21,11 @@ export async function getMoviesCategory() {
   return data;
 }
 
+export async function getMoviesGenres(id) {
+  const { data } = await instance.get(`/discover/movie?api_key=${KEY}&with_genres=${id}`);
+  return data;
+}
+
 export async function getMovieItem(id) {
   const { data } = await instance.get(
     `/movie/${id}?api_key=${KEY}&language=en-US`
