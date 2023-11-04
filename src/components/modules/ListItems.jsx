@@ -20,14 +20,14 @@ export default function ListItems({
   return (
     <li
       key={id}
-      className={`flex w-max h-max lg:h-72 mt-8 basis-1/2 hover:basis-full overflow-hidden border border-slate-600 rounded-md group hover:border-current transform duration-500`}
+      className={`flex w-max min-h-max lg:h-72 mt-8 basis-1/2 hover:basis-full overflow-hidden border border-slate-600 rounded-md group hover:border-current transform duration-500`}
     >
       <Link href={`${adress}/${id}`}>
         <div className={`relative overflow-hidden`}>
           <img
             src={poster}
             alt="images"
-            className="w-max h-[400px] lg:h-full object-center object-cover"
+            className="w-{210px} h-[300px] lg:h-full object-center object-cover"
           />
         </div>
         <div className="flex flex-col py-2 text-center absolute top-0 right-0 w-full rounded-md bg-slate-600/90 translate-x-full group-hover:translate-x-0 duration-500">

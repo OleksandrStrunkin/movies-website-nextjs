@@ -20,14 +20,14 @@ export default function CategoryList({
   return (
     <li
       key={id}
-      className={`w-full h-full overflow-hidden border border-slate-600 rounded-md group hover:border-current transform duration-500`}
+      className={`w-full min-h-max overflow-hidden border border-slate-600 rounded-md group hover:border-current transform duration-500`}
     >
       <Link href={`${adress}/${id}`}>
         <div className={`relative overflow-hidden`}>
           <img
             src={poster}
             alt="images"
-            className="w-full h-full object-center object-cover"
+            className="w-[210px] h-[300px] object-fill"
           />
         </div>
         <div className="absolute flex flex-col items-start gap-2 p-2 

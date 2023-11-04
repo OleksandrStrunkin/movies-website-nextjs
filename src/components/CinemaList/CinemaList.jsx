@@ -24,7 +24,9 @@ export default function CinemaList() {
         const resultDay = await getMoviesListDay();
         setItemsDay(resultDay.results)
         const resultCategory = await getMoviesCategory();
-        setItemsCategory(resultCategory.genres)
+        setItemsCategory(resultCategory.genres);
+        const resultGenres = await getMoviesGenres(18);
+        setItemsGenres(resultGenres.results);
       } catch (error) {
         setError(error);
       } finally {
@@ -75,8 +77,8 @@ export default function CinemaList() {
             />
           ))}
       </ul>
-      <h2 className="text-4xl mt-8">Search movies by category:</h2>
-      <div className="flex w-full justify-between gap-2">
+      <h2 className="text-4xl my-8">Search movies by category:</h2>
+      <div className="flex w-full justify-between gap-2 mb-8">
         <div className="flex gap-1 w-48 h-full flex-col">
           {itemsCategory && itemsCategory.map((item, index) => (
                 <button
@@ -88,7 +90,7 @@ export default function CinemaList() {
               </button>
               ))}
         </div>
-        <ul className="grid gap-2 justify-items-center sm:grid-cols-6">
+        <ul className="grid gap-2 justify-items-center content-between sm:grid-cols-6">
             {itemsGenres && itemsGenres.slice(0, 12).map((item, index) => (
               <CategoryList
                 key={item.id}
