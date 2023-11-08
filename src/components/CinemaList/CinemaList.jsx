@@ -83,14 +83,14 @@ export default function CinemaList() {
           {itemsCategory && itemsCategory.map((item, index) => (
                 <button
                 key={item.id}
-                className={`flex ${selectedCategoryId === item.id ? 'font-bold border-current' : ''} p-1 w-48 border border-slate-600 rounded-md hover:border-current transform duration-500`}
+                className={`flex ${selectedCategoryId === item.id ? 'font-bold border-current' : ''} pl-2 w-48 border border-slate-600 rounded-md hover:border-current transform duration-500`}
                 onClick={() => handleCategoryClick(item.id)}
               >
                 {item.name}
               </button>
               ))}
         </div>
-        <ul className="grid gap-2 justify-items-center content-between sm:grid-cols-6">
+        <ul className="grid grid-cols-1 gap-2 justify-items-center content-end md:grid-cols-3 sm:grid-cols-1 lg:grid-cols-5 xl:grid-cols-6">
             {itemsGenres && itemsGenres.slice(0, 12).map((item, index) => (
               <CategoryList
                 key={item.id}
