@@ -30,13 +30,10 @@ export default function CategoryList({
             className="w-[210px] h-[300px] object-fill"
           />
         </div>
-        <div className="absolute flex flex-col items-start gap-2 p-2 
-          mt-0 h-max top-full left-0 w-full overflow-auto bg-opacity-90
-           bg-slate-600/60 transform -translate-y-0 transition-transform duration-500 
-           group-hover:-translate-y-full group-hover:bg-slate-600/90">
-          <h2 className="text-xl">{title}</h2>
+        <div className="flex flex-col items-center">
+          <h2 className="text-xs">{title}</h2>
           <p className="text-xs"><span className="mr-1">Date Release:</span>{formattedDate}</p>
-          <p className="text-xs">Rate: {rate}</p>
+          <p className="text-xm">Rate: {rate}</p>
         </div>
       </Link>
     </li>
