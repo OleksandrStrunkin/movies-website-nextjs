@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import photoProfile from "../../../../public/image/photoProfile.svg";
+import TrailerItem from "@/components/modules/TrailerItem";
 
 
 export default function CinemaDetails({ params }) {
@@ -15,7 +16,8 @@ export default function CinemaDetails({ params }) {
   const [item, setItem] = useState({});
 
   const [cast, setCast] = useState([]);
-  const [trailer, setTrailer] = useState([]);
+
+  const [castCounter, setCastCounter] = useState(8);
 
   const dateObject = new Date(item.release_date);
   const options = { year: "numeric", month: "long", day: "numeric" };
@@ -23,6 +25,12 @@ export default function CinemaDetails({ params }) {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const counter = () =>{
+    if (castCounter === 8){
+      setCastCounter(100)
+    } else setCastCounter(8)
+  }
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -46,6 +54,7 @@ export default function CinemaDetails({ params }) {
       try {
         const result = await getCast(cinemaId);
         setCast(result.cast);
+        console.log('getmovie', result)
       } catch (error) {
         setError(error);
       } finally {
@@ -55,22 +64,6 @@ export default function CinemaDetails({ params }) {
     fetchCast();
   }, [cinemaId, setError, setCast, setLoading]);
 
-  const fetchTailer = async () => {
-    setLoading(true);
-    try {
-      const result = await getMovieTrailer(cinemaId);
-      console.log(result);
-      setTrailer(result.videos.results);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-
-  const embedUrl = `https://www.youtube.com/embed/${trailer?.[11]?.key}`;
-
   return (
     <div className="flex mt-5">
       <div className="">
@@ -79,63 +72,48 @@ export default function CinemaDetails({ params }) {
           width={400}
           height={300}
           alt="poster"
-          className="border border-opacity-50 border-gray-500"
+          className="border-4 border-opacity-50 border-gray-500"
         />
         <div className="mb-5">
-          <h2 className="text-2xl">Additional Information:</h2>
-          <p>Duration: {item.runtime} mins</p>
-          <p>IMDb Rating: {item.vote_average}</p>
-          <p>Release Date: {item.release_date}</p>
-          <p>Country: {item.production_countries?.[0]?.name || "N/A"}</p>
+          <p className="p-2 border-b-2 border-opacity-50 border-gray-500">Duration: {item.runtime} mins</p>
+          <p className="p-2 border-b-2 border-opacity-50 border-gray-500">IMDb Rating: {item.vote_average}</p>
+          <p className="p-2 border-b-2 border-opacity-50 border-gray-500">Release Date: {formattedDate}</p>
+          <p className="p-2 border-b-2 border-opacity-50 border-gray-500">Country: {item.production_countries?.[0]?.name || "N/A"}</p>
         </div>
       </div>
       <section className="ml-5 w-9/12">
         <div className="mb-5">
           <h1 className="text-3xl">{item.original_title || item.name}</h1>
-          <p className="flex">{formattedDate}</p>
         </div>
         <div>
           <h2 className="text-2xl">Description:</h2>
           <p className="mb-5">{item.overview}</p>
         </div>
         <div className="mb-5">
-          <div className="mb-5">
-            <h2 className="text-2xl">Trailer:</h2>
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:border-blue-300"
-              onClick={fetchTailer}
-            >
-              Watch Trailer
-            </button>
-            <iframe
-              width="560"
-              height="315"
-              src={embedUrl}
-              title={item.original_title || item.name}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          </div>
+          <TrailerItem id={cinemaId} title={item.original_title}/>
           <h2 className="text-2xl mb-2">Cast:</h2>
-          <ul className="flex flex-wrap">
+          <ul className="grid grid-cols-4 gap-1">
             {cast &&
-              cast.map((actor) => (
-                <li key={actor.id} className="w-1/4 p-2">
+              cast.slice(0, castCounter).map((actor) => (
+                <li key={actor.id} className="flex items-center gap-2 w-full border border-opacity-50 border-gray-500 bg-slate-800 hover:bg-slate-700 cursor-pointer duration-300">
                   <Image
                     src={
                       actor.profile_path
                         ? `https://www.themoviedb.org/t/p/w138_and_h175_face${actor.profile_path}`
                         : photoProfile
                     }
-                    width={138}
-                    height={175}
+                    width={80}
+                    height={90}
                     alt={`${actor.name}`}
                   />
-                  <p className="text-center">{actor.name}</p>
+                  <div>
+                    <p className="text-xm">{actor.name}</p>
+                    <p className="text-xs">{actor.character}</p>
+                  </div>
                 </li>
               ))}
           </ul>
+          <button onClick={counter} className="mt-2 w-full border border-opacity-50 border-gray-500">Show more</button>
         </div>
         <div className="mb-5">
           <a
@@ -151,33 +129,4 @@ export default function CinemaDetails({ params }) {
       {loading && <p>Loading......</p>}
     </div>
   );
-}
-
-{
-  /* {cast &&
-              (hideActors ? cast.slice(0, visibleActors) : cast).map(
-                (actor) => (
-                  <li key={actor.id}>
-                    <Image
-                      src={
-                        actor.profile_path
-                          ? `https://www.themoviedb.org/t/p/w138_and_h175_face${actor.profile_path}`
-                          : photoProfile
-                      }
-                      width={138}
-                      height={175}
-                      alt={`${actor.name}`}
-                    />
-                    <p className={styles.actor}>{actor.name}</p>
-                  </li>
-                )
-              )} */
-}
-
-{
-  /* {cast.length > MAX_VISIBLE_ACTORS && (
-            <button onClick={handleToggleActors} className={styles.btn}>
-              {hideActors ? "Show More" : "Show Less"}
-            </button>
-          )} */
 }
