@@ -6,6 +6,13 @@ const instance = axios.create({
   baseURL: `https://api.themoviedb.org/3`,
 });
 
+export async function getMovieTrailer(id) {
+  const { data } = await instance.get(
+    `/movie/${id}?api_key=${KEY}&append_to_response=videos`
+  );
+  return data;
+}
+
 export async function getMoviesList() {
   const { data } = await instance.get(`/trending/all/week?api_key=${KEY}`);
   return data;
@@ -60,3 +67,4 @@ export async function getMovieVideo(id) {
   );
   return data;
 }
+
