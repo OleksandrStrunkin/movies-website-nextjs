@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function TrailerItem({ id, title }) {
   const [trailers, setTrailers] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
 
   const [visibleLists, setVisibleLists] = useState({});
 
@@ -11,10 +12,16 @@ export default function TrailerItem({ id, title }) {
   const [error, setError] = useState(null);
 
   const toggleVisibility = (type) => {
-    setVisibleLists((prevLists) => ({
-      ...prevLists,
-      [type]: !prevLists[type],
-    }));
+    setVisibleLists(prevState => {
+      const newState = { ...prevState };
+      Object.keys(newState).forEach(key => {
+        if (key !== type) {
+          newState[key] = false;
+        }
+      });
+      newState[type] = !prevState[type];
+      return newState;
+    });
   };
 
   useEffect(() => {
@@ -33,29 +40,37 @@ export default function TrailerItem({ id, title }) {
     fetchCast();
   }, [id, setError, , setLoading]);
 
-  const embedUrl = `https://www.youtube.com/embed/${trailers?.[11]?.key}`;
+  const embedUrl = selectedVideo
+    ? `https://www.youtube.com/embed/${selectedVideo}`
+    : `https://www.youtube.com/embed/${trailers?.[0]?.key}`;
+
+  const changeVideo = (videoKey, type) => {
+    setSelectedVideo(videoKey);
+    toggleVisibility(type);
+  };
 
   const uniqueTypes = Array.from(
     new Set(trailers?.map((trailer) => trailer.type))
   );
 
   return (
-    <div className="relative mb-5 flex items-start justify-between">
-      <div>
+    <div className="mb-5 pb-1 overflow-y-hidden flex flex-col items-start justify-between border-b-2 border-opacity-50 border-gray-500">
+      <div className="flex gap-4">
       {uniqueTypes &&
         uniqueTypes.map((type) => (
-          <div key={type} className="mb-2 flex w-full justify-between border border-opacity-50 border-gray-500">
+          <div key={type} className="relative z-10 mb-2 px-4 py-1 rounded-full flex border border-opacity-50 border-slate-300">
             <h2 className="text-lg font-bold cursor-pointer" onClick={() => toggleVisibility(type)}>
               {type}
             </h2>
             {visibleLists[type] && (
-              <ul className="bottom-1">
+              <ul className="absolute rounded-xl left-0 top-10 w-max border bg-slate-500 animate-slide-down">
                 {trailers
                   .filter((trailer) => trailer.type === type)
                   .map((filteredTrailer) => (
                     <li
                       key={filteredTrailer.id}
-                      className="p-1 border border-opacity-50 border-gray-500 bg-slate-800 "
+                      className="p-1 rounded-xl border border-opacity-50 border-gray-500 bg-slate-800 cursor-pointer hover:bg-slate-700"
+                      onClick={() => changeVideo(filteredTrailer.key, type)}
                     >
                       <div>
                         <p className="text-xm">{filteredTrailer.name}</p>
@@ -67,7 +82,7 @@ export default function TrailerItem({ id, title }) {
           </div>
         ))}
     </div>
-      <div>
+      {trailers && trailers.length > 0 && <div>
         <h2 className="text-2xl">Trailer:</h2>
         <iframe
           width="560"
@@ -78,7 +93,7 @@ export default function TrailerItem({ id, title }) {
           frameBorder="0"
           allowFullScreen
         ></iframe>
-      </div>
+      </div>}
     </div>
   );
 }

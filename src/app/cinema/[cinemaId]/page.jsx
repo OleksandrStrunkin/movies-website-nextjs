@@ -86,12 +86,12 @@ export default function CinemaDetails({ params }) {
           <h1 className="text-3xl">{item.original_title || item.name}</h1>
         </div>
         <div>
-          <h2 className="text-2xl">Description:</h2>
-          <p className="mb-5">{item.overview}</p>
+          <h2 className="text-2xl ">Description:</h2>
+          <p className="mb-5 border-b-2 border-opacity-50 border-gray-500">{item.overview}</p>
         </div>
         <div className="mb-5">
           <TrailerItem id={cinemaId} title={item.original_title}/>
-          <h2 className="text-2xl mb-2">Cast:</h2>
+          <h2 className="text-2xl mb-5">Cast:</h2>
           <ul className="grid grid-cols-4 gap-1">
             {cast &&
               cast.slice(0, castCounter).map((actor) => (
@@ -113,7 +113,7 @@ export default function CinemaDetails({ params }) {
                 </li>
               ))}
           </ul>
-          <button onClick={counter} className="mt-2 w-full border border-opacity-50 border-gray-500">Show more</button>
+          <button onClick={counter} className="mt-2 py-1 w-full border border-opacity-50 border-gray-500 hover:bg-slate-600 duration-300">Show more</button>
         </div>
         <div className="mb-5">
           <a

@@ -20,31 +20,31 @@ export default function Menu() {
 
   return (
     <>
-      <nav className={styles.listNav}>
+      <nav className="flex justify-between items-center">
         <Link href="/cinema">
           <Image className={styles.logo} src={Logo} alt="Logo" />
         </Link>
         <div className={styles.links}>
           <Link
             href="/cinema"
-            className={`${styles.listNav_item} ${
-              router === "/cinema" ? styles.active : ""
+            className={`${'flex'} ${
+              router === "/cinema" ? "text-current" : ""
             }`}
           >
             Cinema
           </Link>
           <Link
             href="/anime"
-            className={`${styles.listNav_item} ${
-              router === "/anime" ? styles.active : ""
+            className={`${''} ${
+              router === "/anime" ? "text-current" : ""
             }`}
           >
             Anime
           </Link>
           <Link
             href="/serials"
-            className={`${styles.listNav_item} ${
-              router === "/serials" ? styles.active : ""
+            className={`${''} ${
+              router === "/serials" ? "text-current" : ""
             }`}
           >
             Serials
