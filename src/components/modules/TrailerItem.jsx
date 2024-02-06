@@ -29,7 +29,6 @@ export default function TrailerItem({ id, title }) {
       setLoading(true);
       try {
         const resultTrailer = await getMovieTrailer(id);
-        console.log("trailer", resultTrailer.videos.results);
         setTrailers(resultTrailer.videos.results);
       } catch (error) {
         setError(error);
@@ -58,7 +57,7 @@ export default function TrailerItem({ id, title }) {
       <div className="flex gap-4">
       {uniqueTypes &&
         uniqueTypes.map((type) => (
-          <div key={type} className="relative z-10 mb-2 px-4 py-1 rounded-full flex border border-opacity-50 border-slate-300">
+          <div key={type} className="relative z-10 mb-2 px-4 py-1 rounded-full flex border border-opacity-50 border-slate-300 hover:bg-slate-600 duration-300">
             <h2 className="text-lg font-bold cursor-pointer" onClick={() => toggleVisibility(type)}>
               {type}
             </h2>
@@ -83,10 +82,10 @@ export default function TrailerItem({ id, title }) {
         ))}
     </div>
       {trailers && trailers.length > 0 && <div>
-        <h2 className="text-2xl">Trailer:</h2>
+        <h2 className="text-xl opacity-50">Trailer:</h2>
         <iframe
-          width="560"
-          height="315"
+          width="760"
+          height="515"
           src={embedUrl}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
