@@ -21,6 +21,7 @@ export default function CinemaDetails({ params }) {
       setLoading(true);
       try {
         const result = await getMovieItem(cinemaId);
+        console.log(result)
         setItem(result);
       } catch (error) {
         setError(error);
@@ -42,6 +43,13 @@ export default function CinemaDetails({ params }) {
           className="border-4 border-opacity-50 border-gray-500"
         />
         <div className="mb-5">
+        <p className="flex gap-2 p-2 border-b-2 border-opacity-50 border-gray-500">
+        <span className="opacity-50">Genres:</span>
+            {item && item.genres?.map(((gen, index) => (
+              <span key={gen.id}>{gen.name}{index !== item.genres.length - 1 && ', '}</span>
+              
+            )))}
+          </p>
           <p className="p-2 border-b-2 border-opacity-50 border-gray-500">
             <span className="opacity-50">Duration:</span> {`${Math.floor(item.runtime / 60)}h ${item.runtime % 60}m`}
           </p>

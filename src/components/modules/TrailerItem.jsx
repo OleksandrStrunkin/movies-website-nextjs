@@ -58,7 +58,7 @@ export default function TrailerItem({ id, title }) {
       {uniqueTypes &&
         uniqueTypes.map((type) => (
           <div key={type} className="relative z-10 mb-2 px-4 py-1 rounded-full flex border border-opacity-50 border-slate-300 hover:bg-slate-600 duration-300">
-            <h2 className="text-lg font-bold cursor-pointer" onClick={() => toggleVisibility(type)}>
+            <h2 className="text-sm font-bold cursor-pointer" onClick={() => toggleVisibility(type)}>
               {type}
             </h2>
             {visibleLists[type] && (
@@ -84,7 +84,7 @@ export default function TrailerItem({ id, title }) {
       {trailers && trailers.length > 0 && <div>
         <h2 className="text-xl opacity-50">Trailer:</h2>
         <iframe
-          width="760"
+          width="860"
           height="515"
           src={embedUrl}
           title={title}
