@@ -14,6 +14,11 @@ export async function getAnimeItem(id) {
   return data;
 }
 
+export async function getAnimeTrending() {
+  const { data } = await instance.get(`trending/anime`);
+  return data;
+}
+
 {'https://kitsu.io/api/edge/anime-characters/id'}
 
 export async function getAnimeCharacter(id) {
