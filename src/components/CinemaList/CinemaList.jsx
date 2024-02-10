@@ -4,6 +4,7 @@ import { getMoviesList, getMoviesListDay, getMoviesCategory, getMoviesGenres } f
 import ListItems from "../modules/ListItems";
 import TopDayItems from "../modules/TopDayItems";
 import CategoryList from "../modules/CategoryList";
+import SearchSinema from "../modules/SearchSInema";
 
 export default function CinemaList() {
   const [items, setItems] = useState(null);
@@ -105,6 +106,7 @@ export default function CinemaList() {
             ))}
         </ul>
       </div>
+      <SearchSinema/>
         {loading && <p>Loading......</p>}
     </>
   );

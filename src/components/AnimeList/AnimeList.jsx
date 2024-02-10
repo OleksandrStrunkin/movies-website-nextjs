@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { getAnimeList, getAnimeTrending } from "../../api/anime";
 import ListItems from "../modules/ListItems";
-import styles from "./AnimeList.module.css";
 import TopDayAnime from "../modules/TopDayItems";
 
 export default function AnimeList() {
