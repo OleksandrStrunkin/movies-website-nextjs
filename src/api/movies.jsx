@@ -60,11 +60,9 @@ export async function getSearchMovies(value) {
   );
   return data;
 }
-
-export async function getMovieVideo(id) {
+export async function getSearchMulti(value) {
   const { data } = await instance.get(
-    `/movie/${id}/images?api_key=${KEY}`
+    `/search/multi?api_key=${KEY}&language=en-US&page=1&include_adult=false&query=${value}`
   );
   return data;
 }
-

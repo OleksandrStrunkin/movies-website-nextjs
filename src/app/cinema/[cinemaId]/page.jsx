@@ -5,7 +5,7 @@ import Image from "next/image";
 import TrailerItem from "@/components/modules/TrailerItem";
 import CastItems from "@/components/modules/CastItems";
 
-export default function CinemaDetails({ params }) {
+export default function CinemaDetails({ params, id }) {
   const { cinemaId } = params;
   const [item, setItem] = useState({});
 
@@ -20,7 +20,7 @@ export default function CinemaDetails({ params }) {
     const fetchMovie = async () => {
       setLoading(true);
       try {
-        const result = await getMovieItem(cinemaId);
+        const result = await getMovieItem(cinemaId || id);
         console.log(result)
         setItem(result);
       } catch (error) {

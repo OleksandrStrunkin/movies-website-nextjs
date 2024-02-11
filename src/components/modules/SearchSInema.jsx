@@ -24,33 +24,35 @@ export default function SearchSinema() {
   
     return (
       <>
-        <h2 className="text-4xl mt-8">Search:</h2>
-        <div className="mt-4 mb-8">
-          <input
-            type="text"
-            placeholder="Enter movie title..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="text-black border border-gray-300 p-2 rounded-md"
-          />
-          <button
-            onClick={handleSearch}
-            className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md"
-          >
-            Search
-          </button>
+        <div className="ml-4 relative">
+          <div className="">
+            <input
+              type="text"
+              placeholder="Enter movie title..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="text-white bg-transparent border border-slate-500 p-1 rounded-md"
+            />
+            <button
+              onClick={handleSearch}
+              className="ml-2 bg-slate-500 text-white px-4 py-1 rounded-md"
+            >
+              Search
+            </button>
+          </div>
+          {loading && <p>Loading......</p>}
+          {error && <p>Error: {error.message}</p>}
+          {items && items.length > 0 ? (
+            <ul className="absolute w-full flex flex-col bg-slate-500 z-10">
+              <li>Ось пошук</li>
+            {items.map((item) => (
+              <li className="border border-gray-300 p-2 rounded-md" key={item.id}>{item.original_title || item.name}</li>
+            ))}
+          </ul>
+          ) : (
+            <p className="absolute">No movies found.</p>
+          )}
         </div>
-        {loading && <p>Loading......</p>}
-        {error && <p>Error: {error.message}</p>}
-        {items && items.length > 0 ? (
-          <ul>
-          {items.map((item) => (
-            <li className="border border-gray-300 p-2 rounded-md" key={item.id}>{item.original_title || item.name}</li>
-          ))}
-        </ul>
-        ) : (
-          <p>No movies found.</p>
-        )}
       </>
     );
   }

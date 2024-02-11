@@ -8,6 +8,7 @@ import Logo from "../../../public/image/logo.svg";
 import openMenu from "../../../public/image/openMenu.svg"
 import styles from "./Navigate.module.css";
 import MobileMenu from "../MobileMenu/MobileMenu";
+import SearchSinema from "../modules/SearchSInema";
 
 
 export default function Menu() {
@@ -21,9 +22,12 @@ export default function Menu() {
   return (
     <>
       <nav className="flex justify-between items-center">
-        <Link href="/cinema">
-          <Image className={styles.logo} src={Logo} alt="Logo" />
-        </Link>
+        <div className="flex items-center">
+          <Link href="/cinema">
+            <Image className={styles.logo} src={Logo} alt="Logo" />
+          </Link>
+          <SearchSinema/>
+        </div>
         <div className={styles.links}>
           <Link
             href="/cinema"
