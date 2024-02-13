@@ -1,5 +1,5 @@
 "use client";
-import { getMovieItem, getCast } from "@/api/movies";
+import { getMovieItem } from "@/api/movies";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import TrailerItem from "@/components/modules/TrailerItem";
@@ -21,7 +21,6 @@ export default function CinemaDetails({ params, id }) {
       setLoading(true);
       try {
         const result = await getMovieItem(cinemaId || id);
-        console.log(result)
         setItem(result);
       } catch (error) {
         setError(error);

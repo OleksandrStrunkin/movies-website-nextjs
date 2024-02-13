@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { getSearchMovies } from "../../api/movies";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function SearchSinema() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,17 +15,28 @@ export default function SearchSinema() {
     try {
       const result = await getSearchMovies(searchTerm);
       setItems(result.results);
-      console.log(items);
     } catch (error) {
       setError(error);
     } finally {
       setLoading(false);
     }
   };
+
+  const closeMenu = (e)=>{
+    e.preventDefault();
+    setItems(null)
+  }
+
+  useEffect(() => {
+    if (searchTerm) {
+      handleSearch();
+    }
+  }, [searchTerm]);
+
   return (
     <>
       <div className="ml-4 relative">
-        <div className="">
+        <form className="" onSubmit={closeMenu}>
           <input
             type="text"
             placeholder="Enter movie title..."
@@ -32,34 +44,28 @@ export default function SearchSinema() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="text-white bg-transparent border border-slate-500 p-1 rounded-md"
           />
-          <button
-            onClick={handleSearch}
-            className="ml-2 bg-slate-500 text-white px-4 py-1 rounded-md"
-          >
-            Search
-          </button>
-        </div>
+          <Link href={`/search?query=${searchTerm}`} className="ml-2 bg-slate-500 text-white px-4 py-1 rounded-md">SearchPage</Link>
+        </form>
         {loading && <p>Loading......</p>}
         {error && <p>Error: {error.message}</p>}
         {items && items.length > 0 ? (
-          <ul className="absolute w-full h-full flex flex-col bg-slate-500 z-10">
-            <li>Ось пошук</li>
-            {items.map((item) => (
+          <ul className="absolute w-full h-full grid grid-cols-1 bg-slate-500 z-10">
+            {items.slice(0, 6).map((item) => (
               <li
-                className="flex border border-gray-300 p-2 rounded-md"
+                className="flex border border-gray-300 p-2 rounded-md bg-slate-600"
                 key={item.id}
               >
                 <Image
                   src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
-                  width={100}
+                  width={80}
                   height={50}
                   alt="poster"
                   className="border-4 border-opacity-50 border-gray-500"
                 />
                 <div>
-                  <p className="p-2 text-xl">{item.original_title || item.name}</p>
-                  <p className="p-2 text-xm opacity-50">IMDb Rating:{item.vote_average}</p>
-                  <p className="p-2 text-xm opacity-50">{item.release_date.split("-")[0]}</p>
+                  <p className="px-2 py-1 text-xm">{item.original_title || item.name}</p>
+                  <p className="px-2 py-1 text-xs opacity-50">IMDb Rating:<span className="pl-2">{item.vote_average}</span></p>
+                  <p className="px-2 py-1 text-xs opacity-50">{item.release_date.split("-")[0]}</p>
                 </div>
               </li>
             ))}
