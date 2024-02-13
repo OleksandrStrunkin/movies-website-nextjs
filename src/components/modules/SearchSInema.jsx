@@ -44,7 +44,7 @@ export default function SearchSinema() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="text-white bg-transparent border border-slate-500 p-1 rounded-md"
           />
-          <Link href={`/search?query=${searchTerm}`} className="ml-2 bg-slate-500 text-white px-4 py-1 rounded-md">SearchPage</Link>
+          <button type="submit"><Link href={`/search?query=${searchTerm}`} className="ml-2 bg-slate-500 text-white px-4 py-1 rounded-md">SearchPage</Link></button>
         </form>
         {loading && <p>Loading......</p>}
         {error && <p>Error: {error.message}</p>}
