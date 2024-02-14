@@ -36,7 +36,13 @@ export default function SearchSinema() {
   return (
     <>
       <div className="ml-4 relative">
-        <form className="" onSubmit={closeMenu}>
+        <form
+          className=""
+          onSubmit={(e) => {
+            e.preventDefault();
+            setItems(null)
+          }}
+        >
           <input
             type="text"
             placeholder="Enter movie title..."
@@ -44,7 +50,14 @@ export default function SearchSinema() {
             onChange={(e) => setSearchTerm(e.target.value)}
             className="text-white bg-transparent border border-slate-500 p-1 rounded-md"
           />
-          <button type="submit"><Link href={`/search?query=${searchTerm}`} className="ml-2 bg-slate-500 text-white px-4 py-1 rounded-md">SearchPage</Link></button>
+         <button type="submit">
+            <Link
+              href={`/search?query=${searchTerm}`}
+              className="ml-2 bg-slate-500 text-white px-4 py-1 rounded-md"
+            >
+              SearchPage
+            </Link>
+         </button>
         </form>
         {loading && <p>Loading......</p>}
         {error && <p>Error: {error.message}</p>}
@@ -63,16 +76,21 @@ export default function SearchSinema() {
                   className="border-4 border-opacity-50 border-gray-500"
                 />
                 <div>
-                  <p className="px-2 py-1 text-xm">{item.original_title || item.name}</p>
-                  <p className="px-2 py-1 text-xs opacity-50">IMDb Rating:<span className="pl-2">{item.vote_average}</span></p>
-                  <p className="px-2 py-1 text-xs opacity-50">{item.release_date.split("-")[0]}</p>
+                  <p className="px-2 py-1 text-xm">
+                    {item.original_title || item.name}
+                  </p>
+                  <p className="px-2 py-1 text-xs opacity-50">
+                    IMDb Rating:
+                    <span className="pl-2">{item.vote_average}</span>
+                  </p>
+                  <p className="px-2 py-1 text-xs opacity-50">
+                    {item.release_date.split("-")[0]}
+                  </p>
                 </div>
               </li>
             ))}
           </ul>
-        ) : (
-          null
-        )}
+        ) : null}
       </div>
     </>
   );
