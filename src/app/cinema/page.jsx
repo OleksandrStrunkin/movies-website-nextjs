@@ -1,4 +1,4 @@
-import CinemaList from "../../components/CinemaList/CinemaList";
+import CinemaList from "../../components/CinemaPage/CinemaPage";
 
 export default function CinemaPage () {
     

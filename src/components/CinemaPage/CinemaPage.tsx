@@ -24,6 +24,7 @@ export default function CinemaList() {
         setItems(result.results);
         const resultDay = await getMoviesListDay();
         setItemsDay(resultDay.results)
+        console.log(resultDay.results)
         const resultCategory = await getMoviesCategory();
         setItemsCategory(resultCategory.genres);
         const resultGenres = await getMoviesGenres(18);
@@ -49,13 +50,13 @@ export default function CinemaList() {
 
   return (
     <>
-      <h2 className="text-4xl mt-8">Top day:</h2>
-        <ul className="grid gap-2 grid-cols-1 justify-items-center sm:grid-cols-3">
-          {itemsDay && itemsDay.slice(1,4).map((item) => (
+        <ul className="grid w-full relative">
+          {itemsDay && itemsDay.slice(1,2).map((item) => (
             <TopDayItems
               key={item.id}
               id={item.id}
               poster={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+              bg={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
               title={item.original_title || item.name}
               overview={item.overview}
               rate={item.vote_average}
@@ -63,7 +64,7 @@ export default function CinemaList() {
             />
           ))}
       </ul>
-      <h2 className="text-4xl mt-8">The Most Trending Now:</h2>
+      {/* <h2 className="text-4xl mt-8">The Most Trending Now:</h2>
          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 justify-items-center lg:flex">
           {items && items.slice(2,8).map((item, index) => (
             <ListItems
@@ -77,7 +78,7 @@ export default function CinemaList() {
               index={index}
             />
           ))}
-      </ul>
+      </ul> */}
       <h2 className="text-4xl my-8">Search movies by category:</h2>
       <div className="flex w-full justify-between gap-2 mb-8">
         <div className="flex gap-1 w-48 h-full flex-col">

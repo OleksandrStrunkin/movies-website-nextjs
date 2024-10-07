@@ -1,7 +1,5 @@
 "use client";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { useSearchParams } from "next/navigation";
@@ -49,7 +47,7 @@ export default function Search() {
       <div className="flex mb-4">
         <button
           onClick={sortByYear}
-          className="bg-slat-500 hover:bg-slat-700 text-white font-bold py-2 px-4 rounded"
+          className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded"
         >
         Year {ascending ? '▼' : '▲'}
         </button>
