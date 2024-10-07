@@ -36,7 +36,7 @@ export default function CinemaList() {
       }
     };
     fetchMoviesList();
-  }, [setError, setItems, setItemsDay, setLoading]);
+  }, [setItems, setItemsDay]);
 
   const handleCategoryClick = async (categoryId) => {
     try {
@@ -64,28 +64,13 @@ export default function CinemaList() {
             />
           ))}
       </ul>
-      {/* <h2 className="text-4xl mt-8">The Most Trending Now:</h2>
-         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 justify-items-center lg:flex">
-          {items && items.slice(2,8).map((item, index) => (
-            <ListItems
-              key={item.id}
-              id={item.id}
-              poster={`https://image.tmdb.org/t/p/original${item.poster_path}`}
-              title={item.original_title || item.name}
-              overview={item.overview}
-              rate={item.vote_average}
-              rDate={item.release_date}
-              index={index}
-            />
-          ))}
-      </ul> */}
       <h2 className="text-4xl my-8">Search movies by category:</h2>
       <div className="flex w-full justify-between gap-2 mb-8">
         <div className="flex gap-1 w-48 h-full flex-col">
-          {itemsCategory && itemsCategory.map((item, index) => (
+          {itemsCategory && itemsCategory.map((item) => (
                 <button
                 key={item.id}
-                className={`flex ${selectedCategoryId === item.id ? 'font-bold border-current' : ''} pl-2 w-48 border border-slate-600 rounded-md hover:border-current transform duration-500`}
+                className={`flex ${selectedCategoryId === item.id ? 'font-bold border-current' : ''} pl-2 border border-slate-600 rounded-md hover:border-current transform duration-500`}
                 onClick={() => handleCategoryClick(item.id)}
               >
                 {item.name}
@@ -107,7 +92,6 @@ export default function CinemaList() {
             ))}
         </ul>
       </div>
-      <SearchSinema/>
         {loading && <p>Loading......</p>}
     </>
   );
