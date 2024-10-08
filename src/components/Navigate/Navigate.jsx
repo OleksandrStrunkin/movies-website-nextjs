@@ -21,7 +21,7 @@ export default function Menu() {
 
   return (
     <>
-      <nav className="flex justify-between items-center">
+      <nav className="flex justify-between items-center text-white">
         <div className="flex items-center">
           <Link href="/cinema">
             <Image className={styles.logo} src={Logo} alt="Logo" />
@@ -44,14 +44,6 @@ export default function Menu() {
             }`}
           >
             Anime
-          </Link>
-          <Link
-            href="/serials"
-            className={`${''} ${
-              router === "/serials" ? "text-current" : ""
-            }`}
-          >
-            Serials
           </Link>
         </div>
         <button className={styles.mobileMenuButton} onClick={toggleMobileMenu}>

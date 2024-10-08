@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import React from "react";
 
 export default function TopDayAnime({
   poster,
@@ -20,14 +22,17 @@ const formattedDate = dateObject.toLocaleDateString('en-GB', options);
   return (
     <li
       key={id}
-      className="flex relative justify-center overflow-hidden w-full mt-8 border border-slate-600 rounded-md group hover:border-current transform duration-500"
+      className="flex relative justify-center overflow-hidden w-full mt-8 border
+       border-slate-600 rounded-md group hover:border-current transform duration-500"
     >
       <Link href={`${adress}/${id}`}>
         <div className="">
-          <img
+          <Image
             src={poster}
             alt="images"
             className="object-center h-full w-full object-contain"
+            width={500}
+            height={500}
           />
           <div className="absolute flex flex-col items-start gap-2 p-2 
           mt-0 h-max top-full left-0 w-full overflow-auto bg-opacity-90
