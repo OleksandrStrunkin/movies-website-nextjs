@@ -1,4 +1,5 @@
 import axios from "axios";
+import { MovieListResponse, GenreListResponse } from "../types/movie";
 
 const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
@@ -13,7 +14,14 @@ const tmdbApi = axios.create({
   },
 });
 
-export const fetchTrendingMovies = async () => {
-  const response = await tmdbApi.get("/trending/movie/week");
+export const fetchTrendingMovies = async (): Promise<MovieListResponse["results"]> => {
+  const response = await tmdbApi.get<MovieListResponse>("/trending/movie/week");
   return response.data.results;
+};
+
+export const getGenres = async (): Promise<GenreListResponse["genres"]> => {
+  const res = await tmdbApi.get<GenreListResponse>("/genre/movie/list", {
+    params: { language: "en-US" },
+  });
+  return res.data.genres;
 };

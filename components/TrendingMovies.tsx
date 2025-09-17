@@ -27,8 +27,8 @@ export default function TrendingMovies() {
         spaceBetween={20} // Відстань між слайдами (у пікселях)
         slidesPerView={1} // Кількість слайдів, що відображаються одночасно
         navigation // Включити кнопки навігації
-        pagination={{ clickable: false }} // Включити пагінацію (крапки)
-        scrollbar={{ draggable: true }} // Включити скролбар
+        pagination={{ clickable: true }} // Включити пагінацію (крапки)
+        scrollbar={{ draggable: false }} // Включити скролбар
         breakpoints={{
           // Адаптивність: скільки слайдів показувати на різних екранах
           640: {
@@ -49,16 +49,17 @@ export default function TrendingMovies() {
         {movies.map((movie) => (
           <SwiperSlide key={movie.id}>
             {/* Тут буде компонент картки фільму */}
-            <div className="bg-gray-800 rounded-lg p-4 text-white  w-full h-100 relative">
+            <div className="bg-gray-800 rounded-lg p-4 text-white h-full">
               <Image
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
-                fill
-                className="rounded-md object-cover"
+                width={250}
+                height={550}
+                className="rounded-md"
               />
+              <h3 className="text-lg font-semibold mt-8">{movie.title}</h3>
+              <p className="text-sm text-gray-300">{movie.release_date}</p>
             </div>
-            <h3 className="text-lg font-semibold mt-8">{movie.title}</h3>
-            <p className="text-sm text-gray-300">{movie.release_date}</p>
           </SwiperSlide>
         ))}
       </Swiper>
