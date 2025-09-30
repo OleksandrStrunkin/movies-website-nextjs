@@ -34,7 +34,7 @@ export default function HeroBanner() {
                 <h2 className="text-4xl font-bold mb-4">{heroMovie.title}</h2>
                 <p className="mb-6">{heroMovie.overview}</p>
                 <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                  Дивитися зараз
+                  Watch now
                 </button>
             </div>
           </div>

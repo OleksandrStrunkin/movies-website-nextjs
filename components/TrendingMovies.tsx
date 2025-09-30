@@ -21,10 +21,10 @@ export default function TrendingMovies() {
   }
 
   return (
-    <section className="my-8">
+    <section className="my-8 mx-auto max-w-[1360px]">
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y]} // Підключи модулі
-        spaceBetween={20} // Відстань між слайдами (у пікселях)
+        spaceBetween={2} // Відстань між слайдами (у пікселях)
         slidesPerView={1} // Кількість слайдів, що відображаються одночасно
         navigation // Включити кнопки навігації
         pagination={{ clickable: true }} // Включити пагінацію (крапки)
@@ -33,15 +33,15 @@ export default function TrendingMovies() {
           // Адаптивність: скільки слайдів показувати на різних екранах
           640: {
             slidesPerView: 2,
-            spaceBetween: 20,
+            spaceBetween: 2,
           },
           768: {
-            slidesPerView: 3,
-            spaceBetween: 30,
+            slidesPerView: 4,
+            spaceBetween: 5,
           },
           1024: {
-            slidesPerView: 4, // Наприклад, 4 фільми на великому екрані
-            spaceBetween: 40,
+            slidesPerView: 6, // Наприклад, 4 фільми на великому екрані
+            spaceBetween: 10,
           },
         }}
         className="mySwiper" // Для додаткових стилів, якщо потрібно
@@ -49,15 +49,17 @@ export default function TrendingMovies() {
         {movies.map((movie) => (
           <SwiperSlide key={movie.id}>
             {/* Тут буде компонент картки фільму */}
-            <div className="bg-gray-800 rounded-lg p-4 text-white h-full">
+            <div className=" rounded-lg text-white mx-auto flex flex-col items-center">
               <Image
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
-                width={250}
-                height={550}
+                width={200}
+                height={300}
                 className="rounded-md"
               />
-              <h3 className="text-lg font-semibold mt-8">{movie.title}</h3>
+              <h3 className="text-sm font-semibold mt-2 overflow-hidden truncate w-40 text-center">
+                {movie.title}
+              </h3>
               <p className="text-sm text-gray-300">{movie.release_date}</p>
             </div>
           </SwiperSlide>
