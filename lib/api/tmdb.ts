@@ -25,3 +25,19 @@ export const getGenres = async (): Promise<GenreListResponse["genres"]> => {
   });
   return res.data.genres;
 };
+
+export const getMoviesByGenres = async (
+  genreIds: number[]
+): Promise<MovieListResponse> => {
+  const genresString = genreIds.join(",");
+
+  const res = await tmdbApi.get<MovieListResponse>("/discover/movie", {
+    params: {
+      language: "en-US",
+      with_genres: genresString,
+      sort_by: "popularity.desc",
+    },
+  });
+
+  return res.data;
+};
