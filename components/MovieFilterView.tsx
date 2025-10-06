@@ -2,7 +2,7 @@ import { useMoviesByGenresQuery } from "@/lib/hook/queries/useMoviesByGenresQuer
 import Image from "next/image";
 
 export default function MovieFilterView({ id }: { id: number }) {
-  const genreIds = id === 0 ? [] : [id];
+  const genreIds = id === 0 ? [28] : [id];
 
     const { data: movies, isLoading, isError } = useMoviesByGenresQuery(genreIds);
     console.log(movies);
