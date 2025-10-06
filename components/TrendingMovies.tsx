@@ -1,8 +1,9 @@
 "use client";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { Navigation, A11y } from "swiper/modules";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useTrendingMoviesQuery } from "@/lib/hook/queries/useTrendingMoviesQuery";
+import Card from "./Card";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -21,12 +22,15 @@ export default function TrendingMovies() {
   }
 
   return (
-    <section className="my-8 mx-auto max-w-[1360px]">
+    <section className="mt-[-20px] mx-auto max-w-[1360px] relative">
       <Swiper
         modules={[Navigation, A11y]} // Підключи модулі
         spaceBetween={2} // Відстань між слайдами (у пікселях)
         slidesPerView={1} // Кількість слайдів, що відображаються одночасно
-        navigation // Включити кнопки навігації
+        navigation={{
+          nextEl: ".swiper-button-next-custom", // Клас для кнопки ВПРАВО
+          prevEl: ".swiper-button-prev-custom", // Клас для кнопки ВЛІВО
+        }}
         breakpoints={{
           // Адаптивність: скільки слайдів показувати на різних екранах
           640: {
@@ -46,23 +50,18 @@ export default function TrendingMovies() {
       >
         {movies.map((movie) => (
           <SwiperSlide key={movie.id}>
-            {/* Тут буде компонент картки фільму */}
-            <div className="bg-amber-900 rounded-lg text-white mx-auto flex flex-col items-center">
-              <Image
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                width={200}
-                height={300}
-                className="rounded-md"
-              />
-              <h3 className="text-sm font-semibold mt-2 overflow-hidden truncate w-40 text-center">
-                {movie.title}
-              </h3>
-              <p className="text-sm text-gray-300">{movie.release_date}</p>
-            </div>
+            <Card movie={movie} />
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="custom-swiper-navigation absolute bottom-100 right-0 flex justify-end space-x-2 p-2">
+        <div className="swiper-button-next-custom cursor-pointer bg-white/30 p-2 rounded-sm hover:bg-white/20 duration-300">
+          <ChevronLeftIcon className="w-6 h-6 text-white" />
+        </div>
+        <div className="swiper-button-next-custom cursor-pointer bg-white/30 p-2 rounded-sm hover:bg-white/20 duration-300">
+          <ChevronRightIcon className="w-6 h-6 text-white" />
+        </div>
+      </div>
     </section>
   );
 }
