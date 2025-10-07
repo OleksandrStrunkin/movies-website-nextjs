@@ -55,7 +55,7 @@ export default function TrendingMovies() {
         ))}
       </Swiper>
       <div className="custom-swiper-navigation absolute bottom-100 right-0 flex justify-end space-x-2 p-2">
-        <div className="swiper-button-next-custom cursor-pointer bg-white/30 p-2 rounded-sm hover:bg-white/20 duration-300">
+        <div className="swiper-button-prev-custom cursor-pointer bg-white/30 p-2 rounded-sm hover:bg-white/20 duration-300">
           <ChevronLeftIcon className="w-6 h-6 text-white" />
         </div>
         <div className="swiper-button-next-custom cursor-pointer bg-white/30 p-2 rounded-sm hover:bg-white/20 duration-300">
