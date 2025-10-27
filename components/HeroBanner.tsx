@@ -6,6 +6,8 @@ export default function HeroBanner() {
   const randomIndex = Math.floor(Math.random() * 10);
   const heroMovie = movies ? movies[randomIndex] : null;
 
+  console.log(heroMovie);
+
   if (isLoading) {
     return <div>Завантаження банера...</div>;
   }
@@ -30,11 +32,15 @@ export default function HeroBanner() {
               className="rounded-md mx-auto"
             />
             <div>
-              <h2 className="text-4xl font-bold mb-4">{heroMovie.title}</h2>
-              <p className="mb-6">{heroMovie.overview}</p>
-              <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                Watch now
-              </button>
+             <div>
+                <h2 className="text-4xl font-bold mb-4">{heroMovie.title}</h2>
+                <h3>{heroMovie.release_date}</h3>
+                <p>{heroMovie.vote_average}</p>
+                <p className="mb-6">{heroMovie.overview}</p>
+                <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                  Watch trailer
+                </button>
+             </div>
             </div>
           </div>
         </section>
