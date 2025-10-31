@@ -19,7 +19,7 @@ export default function HeroBanner() {
       {heroMovie && (
         <section
           className="relative h-196 bg-cover flex items-center justify-center 
-             [mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]"
+             md:[mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`,
           }}
@@ -27,7 +27,7 @@ export default function HeroBanner() {
           <div
             className="relative flex flex-col md:flex-row items-center gap-6 
                     bg-card/90 backdrop-blur-2xl border border-border
-                    rounded-2xl shadow-2xl p-6 md:p-10 w-[90%] md:w-4xl
+                    rounded-2xl shadow-2xl p-4 md:p-6 w-[90%] md:w-4xl
                     text-foreground"
           >
             <Image
@@ -39,7 +39,7 @@ export default function HeroBanner() {
             />
 
             <div className="flex flex-col text-center md:text-left max-w-lg">
-              <h2 className="text-4xl md:text-5xl font-bold mb-3 text-foreground">
+              <h2 className="text-3xl md:text-5xl font-bold mb-3 text-foreground">
                 {heroMovie.title}
               </h2>
               <div className="flex justify-center md:justify-start items-center gap-4 mb-3 text-muted">

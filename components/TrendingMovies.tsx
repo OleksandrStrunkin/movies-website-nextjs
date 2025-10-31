@@ -22,31 +22,45 @@ export default function TrendingMovies() {
   }
 
   return (
-    <section className="mt-[-20px] mx-auto max-w-[1360px] relative">
+    <section className="relative container mx-auto pb-12 px-4">
+      <div className="flex items-center justify-between mb-4 px-2">
+        <h2 className="text-2xl font-semibold text-foreground">
+          Popular Movies
+        </h2>
+        <div className="custom-swiper-navigation flex gap-2">
+          <div
+            className="swiper-button-prev-custom cursor-pointer p-2 rounded-lg
+                      bg-card/70 border border-border text-foreground
+                      hover:bg-accent hover:text-white shadow-sm
+                      transition-all duration-300"
+          >
+            <ChevronLeftIcon className="w-5 h-5" />
+          </div>
+          <div
+            className="swiper-button-next-custom cursor-pointer p-2 rounded-lg
+                      bg-card/70 border border-border text-foreground
+                      hover:bg-accent hover:text-white shadow-sm
+                      transition-all duration-300"
+          >
+            <ChevronRightIcon className="w-5 h-5" />
+          </div>
+        </div>
+      </div>
+
       <Swiper
-        modules={[Navigation, A11y]} // Підключи модулі
-        spaceBetween={2} // Відстань між слайдами (у пікселях)
-        slidesPerView={1} // Кількість слайдів, що відображаються одночасно
+        modules={[Navigation, A11y]}
+        spaceBetween={8}
+        slidesPerView={1}
         navigation={{
-          nextEl: ".swiper-button-next-custom", // Клас для кнопки ВПРАВО
-          prevEl: ".swiper-button-prev-custom", // Клас для кнопки ВЛІВО
+          nextEl: ".swiper-button-next-custom",
+          prevEl: ".swiper-button-prev-custom",
         }}
         breakpoints={{
-          // Адаптивність: скільки слайдів показувати на різних екранах
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 2,
-          },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 5,
-          },
-          1024: {
-            slidesPerView: 6, // Наприклад, 4 фільми на великому екрані
-            spaceBetween: 10,
-          },
+          640: { slidesPerView: 2, spaceBetween: 8 },
+          768: { slidesPerView: 4, spaceBetween: 12 },
+          1024: { slidesPerView: 6, spaceBetween: 16 },
         }}
-        className="mySwiper" // Для додаткових стилів, якщо потрібно
+        className="mySwiper"
       >
         {movies.map((movie) => (
           <SwiperSlide key={movie.id}>
@@ -54,14 +68,12 @@ export default function TrendingMovies() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="custom-swiper-navigation absolute bottom-100 right-0 flex justify-end space-x-2 p-2">
-        <div className="swiper-button-prev-custom cursor-pointer bg-white/30 p-2 rounded-sm hover:bg-white/20 duration-300">
-          <ChevronLeftIcon className="w-6 h-6 text-white" />
-        </div>
-        <div className="swiper-button-next-custom cursor-pointer bg-white/30 p-2 rounded-sm hover:bg-white/20 duration-300">
-          <ChevronRightIcon className="w-6 h-6 text-white" />
-        </div>
-      </div>
+
+      {/* легкий градієнт для fade знизу */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-20 
+                  bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none"
+      />
     </section>
   );
 }
