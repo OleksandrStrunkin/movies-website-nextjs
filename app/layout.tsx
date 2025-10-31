@@ -1,5 +1,6 @@
 "use client";
 import type { Metadata } from "next";
+import { useEffect } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import QueryClientProviderWrapper from "../lib/providers/QueryClientProviderWrapper";
 import Header from "@/components/Header";
@@ -26,11 +27,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { colorTheme } = useThemeStore();
+  const { isDark } = useThemeStore();
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDark) root.classList.add("dark");
+    else root.classList.remove("dark");
+  }, [isDark]);
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased ${colorTheme}`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryClientProviderWrapper>
           <Header />
