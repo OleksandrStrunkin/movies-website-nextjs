@@ -14,21 +14,17 @@ export default function Card({ movie }: CardProps) {
                flex flex-col items-center text-center shadow-sm
                hover:shadow-lg transition-all duration-300 cursor-pointer"
       >
-        {/* постер */}
-        <div className="relative w-full">
+        <div className="relative overflow-hidden rounded-xl group cursor-pointer">
           <Image
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
             width={300}
             height={400}
-            className="w-full h-auto object-cover rounded-xl transition-transform duration-300 group-hover:blur-sm"
+            className="w-full object-cover rounded-xl group-hover:blur-sm group-hover:brightness-50 transition-all duration-300 "
           />
-          {/* легке затемнення при hover */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 transition-all duration-300 rounded-xl"></div>
-
           <button
             title="Watch trailer"
-            className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300"
+            className="absolute inset-0 flex items-center justify-center text-white opacity-0 cursor-pointer group-hover:opacity-100 transition-all duration-300"
           >
             <div className="w-16 h-16 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center">
               <span className="text-3xl">▶️</span>
@@ -36,16 +32,16 @@ export default function Card({ movie }: CardProps) {
           </button>
 
           {/* блок із іконками внизу */}
-          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-4 opacity-0 cursor-pointer group-hover:opacity-100 transition-all duration-300">
             <button
               title="Favorite"
-              className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md transition"
+              className="p-2 rounded-full bg-white/20 hover:bg-white/40 cursor-pointer backdrop-blur-md transition"
             >
               ❤️
             </button>
             <button
               title="Look later"
-              className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md transition"
+              className="p-2 rounded-full bg-white/20 hover:bg-white/40 cursor-pointer backdrop-blur-md transition"
             >
               🔖
             </button>
