@@ -30,9 +30,8 @@ export default function RootLayout({
   const { isDark } = useThemeStore();
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (isDark) root.classList.add("dark");
-    else root.classList.remove("dark");
+    const body = document.body;
+    body.dataset.theme = isDark ? "dark" : "light";
   }, [isDark]);
   return (
     <html lang="en">

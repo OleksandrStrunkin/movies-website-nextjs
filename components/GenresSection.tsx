@@ -24,7 +24,7 @@ export default function GenresSection() {
 
   return (
     <section className="my-8 px-4 container mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-white">Filter by Genre</h2>
+      <h2 className="text-2xl font-bold mb-4 text-text">Filter by Genre</h2>
       <select
         value={selectedGenreId}
         onChange={handleGenreChange}

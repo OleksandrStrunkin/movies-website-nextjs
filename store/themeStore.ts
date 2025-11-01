@@ -13,9 +13,7 @@ const useThemeStore = create<ThemeState>()(
       toggleTheme: () => {
         const next = !get().isDark;
         set({ isDark: next });
-        const root = document.documentElement;
-        if (next) root.classList.add("dark");
-        else root.classList.remove("dark");
+        document.body.dataset.theme = next ? "dark" : "light";
       },
     }),
     { name: "theme-storage" }

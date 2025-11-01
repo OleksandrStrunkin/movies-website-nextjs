@@ -24,9 +24,10 @@ export default function HeroBanner() {
             backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`,
           }}
         >
+          <div className="absolute inset-0 z-10 bg-black/60 backdrop-blur-md pointer-events-none" />
           <div
-            className="relative flex flex-col md:flex-row items-center gap-6 
-                    bg-card/90 backdrop-blur-2xl border border-border
+            className="relative z-20 flex flex-col md:flex-row items-center gap-6 
+                    bg-card/70 dark:gap-10 backdrop-blur-2xl border border-border
                     rounded-2xl shadow-2xl p-4 md:p-6 w-[90%] md:w-4xl
                     text-foreground"
           >
@@ -35,7 +36,7 @@ export default function HeroBanner() {
               alt={heroMovie.title}
               width={280}
               height={420}
-              className="rounded-lg shadow-lg"
+              className="rounded-lg shadow-lg hidden md:block"
             />
 
             <div className="flex flex-col text-center md:text-left max-w-lg">
@@ -65,7 +66,6 @@ export default function HeroBanner() {
     </>
   );
 }
-
 
 //  <section
 //           className={`relative h-196 bg-cover flex items-center justify-center mask-alpha mask-b-from-black mask-b-from-20% mask-b-to-transparent`}

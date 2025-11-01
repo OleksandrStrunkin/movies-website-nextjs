@@ -2,15 +2,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f9fafb;
-  --foreground: #1e1e1e;
-  --accent: #f97316;
-  --accent-hover: #ea580c;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --card: #ffffff;
-  --danger: #ef4444;
-  --success: #22c55e;
+  --color-background: #f9fafb;
+  --color-foreground: #1e1e1e;
+  --color-accent: #f97316;
+  --color-accent-hover: #ea580c;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-card: #ffffff;
+  --color-danger: #ef4444;
+  --color-success: #22c55e;
 }
 
 @theme {
@@ -27,7 +27,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-.dark {
+/* .dark {
   --background: #0d1117;
   --foreground: #e6edf3;
   --accent: #f97316;
@@ -37,11 +37,23 @@
   --card: #161b22;
   --danger: #f87171;
   --success: #4ade80;
+} */
+
+[data-theme='dark'] {
+  --color-background: #0d1117;
+  --color-foreground: #e6edf3;
+  --color-accent: #f97316;
+  --color-accent-hover: #ea580c;
+  --color-muted: #9ca3af;
+  --color-border: #30363d;
+  --color-card: #161b22;
+  --color-danger: #f87171;
+  --color-success: #4ade80;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-foreground);
   font-family: 'Inter', sans-serif;
   transition: background 0.3s ease, color 0.3s ease;
 }
@@ -49,8 +61,15 @@ body {
 
 /* @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-background: #0d1117;
+    --color-foreground: #e6edf3;
+    --color-accent: #f97316;
+    --color-accent-hover: #ea580c;
+    --color-muted: #9ca3af;
+    --color-border: #30363d;
+    --color-card: #161b22;
+    --color-danger: #f87171;
+    --color-success: #4ade80;
   }
 } */
 
