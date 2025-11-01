@@ -6,6 +6,8 @@ export default function HeroBanner() {
   const randomIndex = Math.floor(Math.random() * 10);
   const heroMovie = movies ? movies[randomIndex] : null;
 
+  console.log(heroMovie);
+
   if (isLoading) {
     return <div>Завантаження банера...</div>;
   }
@@ -16,26 +18,47 @@ export default function HeroBanner() {
     <>
       {heroMovie && (
         <section
-          className="relative h-196 bg-cover bg-center flex items-center justify-center"
+          className="relative h-196 bg-cover flex items-center justify-center 
+             md:[mask-image:linear-gradient(to_bottom,black_70%,transparent_100%)]"
           style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie?.backdrop_path})`,
+            backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path})`,
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-black/100 via-transparent to-black/100"></div>
-          <div className="relative flex flex-col gap-2 md:flex-row z-10 text-center text-white px-4 w-5xl h-2xl backdrop-blur-3xl py-8 rounded-lg">
+          <div className="absolute inset-0 z-10 bg-black/60 backdrop-blur-md pointer-events-none" />
+          <div
+            className="relative z-20 flex flex-col md:flex-row items-center gap-6 
+                    bg-card/70 dark:gap-10 backdrop-blur-2xl border border-border
+                    rounded-2xl shadow-2xl p-4 md:p-6 w-[90%] md:w-4xl
+                    text-foreground"
+          >
             <Image
               src={`https://image.tmdb.org/t/p/w500${heroMovie.poster_path}`}
               alt={heroMovie.title}
-              width={300}
-              height={450}
-              className="rounded-md mx-auto"
+              width={280}
+              height={420}
+              className="rounded-lg shadow-lg hidden md:block"
             />
-            <div>
-                <h2 className="text-4xl font-bold mb-4">{heroMovie.title}</h2>
-                <p className="mb-6">{heroMovie.overview}</p>
-                <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                  Watch now
-                </button>
+
+            <div className="flex flex-col text-center md:text-left max-w-lg">
+              <h2 className="text-3xl md:text-5xl font-bold mb-3 text-foreground">
+                {heroMovie.title}
+              </h2>
+              <div className="flex justify-center md:justify-start items-center gap-4 mb-3 text-muted">
+                <span>{heroMovie.release_date}</span>
+                <span className="px-2 py-1 rounded-md bg-accent/20 text-accent font-semibold">
+                  ⭐ {heroMovie.vote_average}
+                </span>
+              </div>
+              <p className="text-lg leading-relaxed mb-8 text-muted line-clamp-5">
+                {heroMovie.overview}
+              </p>
+              <button
+                className="self-center md:self-start bg-accent hover:bg-accent-hover 
+                     text-white font-semibold py-3 px-6 rounded-lg shadow-md 
+                     transition-all duration-300"
+              >
+                🎬 Watch Trailer
+              </button>
             </div>
           </div>
         </section>
@@ -43,3 +66,9 @@ export default function HeroBanner() {
     </>
   );
 }
+
+//  <section
+//           className={`relative h-196 bg-cover flex items-center justify-center mask-alpha mask-b-from-black mask-b-from-20% mask-b-to-transparent`}
+//           style={{
+//             backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie?.backdrop_path})`,
+//           }}

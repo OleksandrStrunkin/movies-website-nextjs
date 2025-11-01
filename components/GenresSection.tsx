@@ -13,7 +13,7 @@ export default function GenresSection() {
     return <div>Не вдалося завантажити жанри.</div>;
   }
   const genres = [
-    { id: 0, name: "Всі жанри" },
+    { id: 0, name: "All genre" },
     ...rawGenres.filter((g) => g.id !== 0),
   ];
 
@@ -23,8 +23,8 @@ export default function GenresSection() {
   };
 
   return (
-    <section className="my-8 px-4 w-[75%] mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-white">Filter by Genre</h2>
+    <section className="my-8 px-4 container mx-auto">
+      <h2 className="text-2xl font-bold mb-4 text-text">Filter by Genre</h2>
       <select
         value={selectedGenreId}
         onChange={handleGenreChange}
@@ -37,7 +37,6 @@ export default function GenresSection() {
                     w-full sm:w-64
                 "
       >
-        {/* 5. Перетворюємо кожен жанр на елемент <option> */}
         {genres.map((genre) => (
           <option key={genre.id} value={genre.id}>
             {genre.name}

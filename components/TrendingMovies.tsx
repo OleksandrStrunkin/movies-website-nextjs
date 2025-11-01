@@ -1,8 +1,9 @@
 "use client";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { Navigation, A11y } from "swiper/modules";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useTrendingMoviesQuery } from "@/lib/hook/queries/useTrendingMoviesQuery";
+import Card from "./Card";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -21,48 +22,56 @@ export default function TrendingMovies() {
   }
 
   return (
-    <section className="my-8 mx-auto max-w-[1360px]">
+    <section className="relative container mx-auto pb-12 px-4">
+      <div className="flex items-center justify-between mb-4 px-2">
+        <h2 className="text-2xl font-semibold text-foreground">
+          Popular Movies
+        </h2>
+        <div className="custom-swiper-navigation flex gap-2">
+          <div
+            className="swiper-button-prev-custom cursor-pointer p-2 rounded-lg
+                      bg-card/70 border border-border text-foreground
+                      hover:bg-accent hover:text-white shadow-sm
+                      transition-all duration-300"
+          >
+            <ChevronLeftIcon className="w-5 h-5" />
+          </div>
+          <div
+            className="swiper-button-next-custom cursor-pointer p-2 rounded-lg
+                      bg-card/70 border border-border text-foreground
+                      hover:bg-accent hover:text-white shadow-sm
+                      transition-all duration-300"
+          >
+            <ChevronRightIcon className="w-5 h-5" />
+          </div>
+        </div>
+      </div>
+
       <Swiper
-        modules={[Navigation, A11y]} // Підключи модулі
-        spaceBetween={2} // Відстань між слайдами (у пікселях)
-        slidesPerView={1} // Кількість слайдів, що відображаються одночасно
-        navigation // Включити кнопки навігації
-        breakpoints={{
-          // Адаптивність: скільки слайдів показувати на різних екранах
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 2,
-          },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 5,
-          },
-          1024: {
-            slidesPerView: 6, // Наприклад, 4 фільми на великому екрані
-            spaceBetween: 10,
-          },
+        modules={[Navigation, A11y]}
+        spaceBetween={8}
+        slidesPerView={1}
+        navigation={{
+          nextEl: ".swiper-button-next-custom",
+          prevEl: ".swiper-button-prev-custom",
         }}
-        className="mySwiper" // Для додаткових стилів, якщо потрібно
+        breakpoints={{
+          640: { slidesPerView: 2, spaceBetween: 8 },
+          768: { slidesPerView: 4, spaceBetween: 12 },
+          1024: { slidesPerView: 6, spaceBetween: 16 },
+        }}
+        className="mySwiper"
       >
         {movies.map((movie) => (
           <SwiperSlide key={movie.id}>
-            {/* Тут буде компонент картки фільму */}
-            <div className="bg-amber-900 rounded-lg text-white mx-auto flex flex-col items-center">
-              <Image
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
-                width={200}
-                height={300}
-                className="rounded-md"
-              />
-              <h3 className="text-sm font-semibold mt-2 overflow-hidden truncate w-40 text-center">
-                {movie.title}
-              </h3>
-              <p className="text-sm text-gray-300">{movie.release_date}</p>
-            </div>
+            <Card movie={movie} />
           </SwiperSlide>
         ))}
       </Swiper>
+      <div
+        className="absolute bottom-0 left-0 right-0 h-20 
+                  bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none"
+      />
     </section>
   );
 }
