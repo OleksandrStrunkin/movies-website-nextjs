@@ -68,8 +68,6 @@ export default function TrendingMovies() {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      {/* легкий градієнт для fade знизу */}
       <div
         className="absolute bottom-0 left-0 right-0 h-20 
                   bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none"

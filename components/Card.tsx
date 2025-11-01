@@ -12,7 +12,7 @@ export default function Card({ movie }: CardProps) {
         key={movie.id}
         className="group relative bg-card border border-border rounded-xl overflow-hidden
                flex flex-col items-center text-center shadow-sm
-               hover:shadow-lg hover:scale-[1.03] transition-all duration-300 cursor-pointer"
+               hover:shadow-lg transition-all duration-300 cursor-pointer"
       >
         {/* постер */}
         <div className="relative w-full">
@@ -21,11 +21,35 @@ export default function Card({ movie }: CardProps) {
             alt={movie.title}
             width={300}
             height={400}
-            className="w-full h-auto object-cover rounded-t-xl"
+            className="w-full h-auto object-cover rounded-xl transition-transform duration-300 group-hover:blur-sm"
           />
-
           {/* легке затемнення при hover */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300" />
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/70 transition-all duration-300 rounded-xl"></div>
+
+          <button
+            title="Watch trailer"
+            className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300"
+          >
+            <div className="w-16 h-16 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md flex items-center justify-center">
+              <span className="text-3xl">▶️</span>
+            </div>
+          </button>
+
+          {/* блок із іконками внизу */}
+          <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <button
+              title="Favorite"
+              className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md transition"
+            >
+              ❤️
+            </button>
+            <button
+              title="Look later"
+              className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md transition"
+            >
+              🔖
+            </button>
+          </div>
         </div>
 
         {/* контент */}
