@@ -14,13 +14,13 @@ export default function Card({ movie }: CardProps) {
                flex flex-col items-center text-center shadow-sm
                hover:shadow-lg transition-all duration-300 cursor-pointer"
       >
-        <div className="relative overflow-hidden rounded-xl group cursor-pointer">
+        <div className="relative w-full aspect-auto overflow-hidden rounded-t-xl cursor-pointer bg-muted">
           <Image
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
             width={300}
-            height={400}
-            className="w-full object-cover rounded-xl group-hover:blur-sm group-hover:brightness-50 transition-all duration-300 "
+            height={450}
+            className="w-full object-cover group-hover:blur-sm group-hover:brightness-50 transition-all duration-300"
           />
           <button
             title="Watch trailer"

@@ -6,9 +6,11 @@ export default function GenresSection() {
   const { data: rawGenres, isLoading, isError } = useGenresQuery();
   const [selectedGenreId, setSelectedGenreId] = useState<number>(0);
 
-  if (isLoading) {
-    return <div>Завантаження жанрів...</div>;
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="w-full h-[40px] mt-12 bg-muted animate-pulse container mx-auto rounded-2xl" />
+  //   );
+  // }
   if (isError || !rawGenres) {
     return <div>Не вдалося завантажити жанри.</div>;
   }

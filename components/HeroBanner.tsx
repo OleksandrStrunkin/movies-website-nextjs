@@ -2,18 +2,9 @@ import Image from "next/image";
 import { useTrendingMoviesQuery } from "@/lib/hook/queries/useTrendingMoviesQuery";
 
 export default function HeroBanner() {
-  const { data: movies, isLoading, isError } = useTrendingMoviesQuery();
+  const { data: movies } = useTrendingMoviesQuery();
   const randomIndex = Math.floor(Math.random() * 10);
   const heroMovie = movies ? movies[randomIndex] : null;
-
-  console.log(heroMovie);
-
-  if (isLoading) {
-    return <div>Завантаження банера...</div>;
-  }
-  if (isError || !heroMovie) {
-    return <div>Не вдалося завантажити банер.</div>;
-  }
   return (
     <>
       {heroMovie && (
@@ -27,7 +18,7 @@ export default function HeroBanner() {
           <div className="absolute inset-0 z-10 bg-black/60 backdrop-blur-md pointer-events-none" />
           <div
             className="relative z-20 flex flex-col md:flex-row items-center gap-6 
-                    bg-card/70 dark:gap-10 backdrop-blur-2xl border border-border
+                    bg-card/70 backdrop-blur-2xl border border-border
                     rounded-2xl shadow-2xl p-4 md:p-6 w-[90%] md:w-4xl
                     text-foreground"
           >

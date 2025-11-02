@@ -13,9 +13,9 @@ import "swiper/css/scrollbar";
 export default function TrendingMovies() {
   const { data: movies, isLoading, isError } = useTrendingMoviesQuery();
 
-  if (isLoading) {
-    return <div>Завантаження трендових фільмів...</div>;
-  }
+  // if (isLoading) {
+  //   return <div className="w-full h-[330px] bg-muted animate-pulse container mx-auto rounded-2xl"/>
+  // }
 
   if (isError || !movies || movies.length === 0) {
     return <div>Не вдалося завантажити трендові фільми.</div>;
@@ -56,9 +56,10 @@ export default function TrendingMovies() {
           prevEl: ".swiper-button-prev-custom",
         }}
         breakpoints={{
-          640: { slidesPerView: 2, spaceBetween: 8 },
-          768: { slidesPerView: 4, spaceBetween: 12 },
-          1024: { slidesPerView: 6, spaceBetween: 16 },
+          320: { slidesPerView: 2, spaceBetween: 6 },
+          640: { slidesPerView: 4, spaceBetween: 8 },
+          768: { slidesPerView: 6, spaceBetween: 12 },
+          1024: { slidesPerView: 8, spaceBetween: 16 },
         }}
         className="mySwiper"
       >
@@ -68,10 +69,10 @@ export default function TrendingMovies() {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div
+      {/* <div
         className="absolute bottom-0 left-0 right-0 h-20 
                   bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none"
-      />
+      /> */}
     </section>
   );
 }
