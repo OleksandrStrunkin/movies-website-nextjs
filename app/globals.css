@@ -27,18 +27,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* .dark {
-  --background: #0d1117;
-  --foreground: #e6edf3;
-  --accent: #f97316;
-  --accent-hover: #ea580c;
-  --muted: #9ca3af;
-  --border: #30363d;
-  --card: #161b22;
-  --danger: #f87171;
-  --success: #4ade80;
-} */
-
 [data-theme='dark'] {
   --color-background: #0d1117;
   --color-foreground: #e6edf3;
@@ -55,9 +43,28 @@ body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: 'Inter', sans-serif;
-  transition: background 0.3s ease, color 0.3s ease;
+  /* transition: background 0.3s ease, color 0.3s ease; */
 }
 
+h1,
+h2,
+h3 {
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* .dark {
+  --background: #0d1117;
+  --foreground: #e6edf3;
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+  --muted: #9ca3af;
+  --border: #30363d;
+  --card: #161b22;
+  --danger: #f87171;
+  --success: #4ade80;
+} */
 
 /* @media (prefers-color-scheme: dark) {
   :root {
@@ -72,11 +79,3 @@ body {
     --color-success: #4ade80;
   }
 } */
-
-h1,
-h2,
-h3 {
-  font-family: 'Oswald', sans-serif;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}

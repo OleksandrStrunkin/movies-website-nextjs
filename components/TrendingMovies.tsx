@@ -2,8 +2,8 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { useTrendingMoviesQuery } from "@/lib/hook/queries/useTrendingMoviesQuery";
 import Card from "./Card";
+import SkeletonCard from "./Skeleton/SkeletonCard";
 
 import { Movie } from "@/lib/types/movie";
 
@@ -70,15 +70,11 @@ export default function TrendingMovies({ movies }: TrendingMoviesProps) {
         className="mySwiper"
       >
         {movies.map((movie) => (
-          <SwiperSlide key={movie.id}>
+          <SwiperSlide key={movie.id} className="max-h-[450px]">
             <Card movie={movie} />
           </SwiperSlide>
         ))}
       </Swiper>
-      {/* <div
-        className="absolute bottom-0 left-0 right-0 h-20 
-                  bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none"
-      /> */}
     </section>
   );
 }

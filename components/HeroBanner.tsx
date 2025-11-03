@@ -6,7 +6,6 @@ interface HeroBannerProps {
 }
 
 export default function HeroBanner({ movies }: HeroBannerProps) {
-  console.log(movies);
   const randomIndex = Math.floor(Math.random() * 10);
   const heroMovie = movies ? movies[randomIndex] : null;
   return (

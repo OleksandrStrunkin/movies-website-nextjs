@@ -4,17 +4,13 @@ import { useGenresQuery } from "@/lib/hook/queries/useGenresQuery";
 import MovieFilterView from "./MovieFilterView";
 
 export default function GenresSection() {
-  const { data: rawGenres, isLoading, isError } = useGenresQuery();
+  const { data: rawGenres, isError } = useGenresQuery();
   const [selectedGenreId, setSelectedGenreId] = useState<number>(0);
 
-  // if (isLoading) {
-  //   return (
-  //     <div className="w-full h-[40px] mt-12 bg-muted animate-pulse container mx-auto rounded-2xl" />
-  //   );
-  // }
   if (isError || !rawGenres) {
     return <div>Не вдалося завантажити жанри.</div>;
   }
+  console.log(rawGenres);
   const genres = [
     { id: 0, name: "All genre" },
     ...rawGenres.filter((g) => g.id !== 0),
@@ -46,7 +42,7 @@ export default function GenresSection() {
           </option>
         ))}
       </select>
-      <MovieFilterView id={selectedGenreId} />
+      <MovieFilterView id={selectedGenreId} genres={rawGenres} />
     </section>
   );
 }
