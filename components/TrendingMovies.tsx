@@ -5,19 +5,25 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useTrendingMoviesQuery } from "@/lib/hook/queries/useTrendingMoviesQuery";
 import Card from "./Card";
 
+import { Movie } from "@/lib/types/movie";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-export default function TrendingMovies() {
-  const { data: movies, isLoading, isError } = useTrendingMoviesQuery();
+interface TrendingMoviesProps {
+  movies: Movie[];
+}
+
+export default function TrendingMovies({ movies }: TrendingMoviesProps) {
+  // const { data: movies, isLoading, isError } = useTrendingMoviesQuery();
 
   // if (isLoading) {
   //   return <div className="w-full h-[330px] bg-muted animate-pulse container mx-auto rounded-2xl"/>
   // }
 
-  if (isError || !movies || movies.length === 0) {
+  if ( !movies || movies.length === 0) {
     return <div>Не вдалося завантажити трендові фільми.</div>;
   }
 

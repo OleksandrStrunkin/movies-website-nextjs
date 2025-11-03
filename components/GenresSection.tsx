@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { useGenresQuery } from "@/lib/hook/queries/useGenresQuery";
 import MovieFilterView from "./MovieFilterView";

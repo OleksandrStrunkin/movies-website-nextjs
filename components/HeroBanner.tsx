@@ -1,8 +1,12 @@
 import Image from "next/image";
-import { useTrendingMoviesQuery } from "@/lib/hook/queries/useTrendingMoviesQuery";
+import { Movie } from "@/lib/types/movie";
 
-export default function HeroBanner() {
-  const { data: movies } = useTrendingMoviesQuery();
+interface HeroBannerProps {
+  movies: Movie[];
+}
+
+export default function HeroBanner({ movies }: HeroBannerProps) {
+  console.log(movies);
   const randomIndex = Math.floor(Math.random() * 10);
   const heroMovie = movies ? movies[randomIndex] : null;
   return (
