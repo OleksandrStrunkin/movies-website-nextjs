@@ -10,7 +10,7 @@ export default function GenresSection() {
   if (isError || !rawGenres) {
     return <div>Не вдалося завантажити жанри.</div>;
   }
-  console.log(rawGenres);
+
   const genres = [
     { id: 0, name: "All genre" },
     ...rawGenres.filter((g) => g.id !== 0),
@@ -22,27 +22,43 @@ export default function GenresSection() {
   };
 
   return (
-    <section className="my-8 px-4 container mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-text">Filter by Genre</h2>
-      <select
-        value={selectedGenreId}
-        onChange={handleGenreChange}
-        className="
-                    bg-gray-800 text-white 
-                    px-4 py-2 rounded-lg 
-                    border border-gray-600 
-                    focus:ring-blue-500 focus:border-blue-500 
-                    shadow-lg appearance-none 
-                    w-full sm:w-64
-                "
-      >
-        {genres.map((genre) => (
-          <option key={genre.id} value={genre.id}>
-            {genre.name}
-          </option>
-        ))}
-      </select>
-      <MovieFilterView id={selectedGenreId} genres={rawGenres} />
+    <section className="my-10 px-4 container mx-auto">
+      <h2 className="text-2xl font-semibold mb-6 text-text tracking-tight flex items-center gap-2">
+        🎬 Filter by Genre
+      </h2>
+      <div className="relative inline-block w-full sm:w-72">
+        <select
+          value={selectedGenreId}
+          onChange={handleGenreChange}
+          className="
+                      w-full sm:w-72 appearance-none
+                      bg-card text-foreground
+                      px-4 py-2.5 rounded-xl
+                      border border-border
+                      shadow-sm
+                      ring-0 focus:outline-none focus:ring-2 focus:ring-accent  
+                      hover:border-accent
+                      transition-all duration-200 ease-in-out
+                      cursor-pointer
+                    "
+        >
+          {genres.map((genre) => (
+            <option
+              key={genre.id}
+              value={genre.id}
+              className="bg-card text-foreground hover:bg-accent hover:text-white"
+            >
+              {genre.name}
+            </option>
+          ))}
+        </select>
+        <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+          ▼
+        </div>
+      </div>
+      <div className="mt-8">
+        <MovieFilterView id={selectedGenreId} genres={rawGenres} />
+      </div>
     </section>
   );
 }

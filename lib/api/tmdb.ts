@@ -1,5 +1,6 @@
 import axios from "axios";
 import { MovieListResponse, GenreListResponse } from "../types/movie";
+import { MovieDetailsResponse } from "../types/details";
 
 export const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
@@ -39,5 +40,15 @@ export const getMoviesByGenres = async (
     },
   });
 
+  return res.data;
+};
+
+export const getMovieDetails = async (movieId: string) => {
+  const res = await tmdbApi.get<MovieDetailsResponse>(`/movie/${movieId}`, {
+    params: {
+      language: "en-US",
+      append_to_response: "videos,credits",
+    },
+  });
   return res.data;
 };

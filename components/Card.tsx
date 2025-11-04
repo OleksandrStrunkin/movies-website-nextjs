@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Movie } from "@/lib/types/movie";
 
 interface CardProps {
@@ -14,7 +15,8 @@ export default function Card({ movie, genres }: CardProps) {
     .join(", ");
   return (
     <>
-      <li
+      <Link
+        href={`/movie/${movie.id}`}
         key={movie.id}
         className="group relative bg-card border border-border rounded-xl overflow-hidden
                flex flex-col items-center text-center shadow-sm
@@ -69,7 +71,7 @@ export default function Card({ movie, genres }: CardProps) {
         >
           ⭐ {movie.vote_average.toFixed(1)}
         </div>
-      </li>
+      </Link>
     </>
   );
 }

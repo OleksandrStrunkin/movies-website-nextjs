@@ -23,12 +23,12 @@ export default function TrendingMovies({ movies }: TrendingMoviesProps) {
   //   return <div className="w-full h-[330px] bg-muted animate-pulse container mx-auto rounded-2xl"/>
   // }
 
-  if ( !movies || movies.length === 0) {
+  if (!movies || movies.length === 0) {
     return <div>Не вдалося завантажити трендові фільми.</div>;
   }
 
   return (
-    <section className="relative container mx-auto pb-12 px-4">
+    <section className="relative container mx-auto px-4">
       <div className="flex items-center justify-between mb-4 px-2">
         <h2 className="text-2xl font-semibold text-foreground">
           Popular Movies

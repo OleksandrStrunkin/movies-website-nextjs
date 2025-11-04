@@ -1,4 +1,5 @@
 import { useTransition, useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Header() {
   const [isPending, startTransition] = useTransition();
@@ -27,7 +28,7 @@ export default function Header() {
                backdrop-blur-sm border-b border-border
                bg-[color-mix(in_oklab,var(--color-background)_90%,transparent)]"
     >
-      <h1 className="text-xl font-semibold text-foreground">Movie App</h1>
+      <Link href={'/'} className="text-xl font-semibold text-foreground">Movie App</Link>
       <button
         disabled={isPending}
         onClick={() => startTransition(toggleTheme)}
