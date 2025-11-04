@@ -10,15 +10,14 @@ export default async function MoviePage({
   params: { id: string };
 }) {
   const movie: MovieDetailsResponse = await getMovieDetails(params.id);
+  console.log(movie);
 
   const trailer = movie.videos?.results.find(
     (video) => video.type === "Trailer" && video.site === "YouTube"
   );
 
   if (!movie) {
-    return (
-      <div className="text-center text-text mt-40">Film not found 😢</div>
-    );
+    return <div className="text-center text-text mt-40">Film not found 😢</div>;
   }
 
   return (
@@ -32,7 +31,7 @@ export default async function MoviePage({
         />
         <div className="relative z-10 mx-auto px-6 pb-10 mt-10 bg-card/80">
           <div className="flex flex-col md:flex-row gap-8">
-            <div className="relative max-w-[320px] aspect-[2/3] overflow-hidden shadow-lg">
+            <div className="relative hidden md:block max-w-[320px] aspect-[2/3] overflow-hidden">
               <Image
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
@@ -46,28 +45,31 @@ export default async function MoviePage({
                     <h3 className="text-lg font-semibold mb-2">
                       Production Companies:
                     </h3>
-                    <div className="flex flex-wrap gap-4 items-center">
+                    <div className="flex flex-col gap-1">
                       {movie.production_companies.map((company) => (
                         <div
                           key={company.id}
                           className="flex items-center gap-2"
                         >
                           {company.logo_path && (
-                            <div className="relative h-8 w-auto">
+                            <div className="relative p-4 bg-[#f9fafb]/50 border border-border rounded-xl w-full flex items-center justify-between">
+                              <span className="text-sm text-foreground/80">
+                                {company.name}
+                              </span>
                               <Image
                                 src={`https://image.tmdb.org/t/p/h60${company.logo_path}`}
                                 alt={company.name}
-                                width={100}
-                                height={32}
+                                width={52}
+                                height={52}
                                 className="object-contain"
                               />
                             </div>
                           )}
-                          {!company.logo_path && (
+                          {/* {!company.logo_path && (
                             <span className="text-sm text-foreground/80">
                               {company.name}
                             </span>
-                          )}
+                          )} */}
                         </div>
                       ))}
                     </div>
