@@ -1,6 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Movie } from "@/lib/types/movie";
+import {
+  PlayIcon,
+  HeartIcon,
+  BookmarkIcon,
+  StarIcon,
+} from "@heroicons/react/24/solid";
+import { PhotoIcon } from "@heroicons/react/24/outline";
 
 interface CardProps {
   movie: Movie;
@@ -30,12 +37,18 @@ export default function Card({ movie, genres }: CardProps) {
             fill={true}
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           />
+          {!movie.poster_path && (
+            <div className="absolute inset-0 bg-card border-b-1 flex flex-col items-center justify-center text-color-text/60 bg-color-card">
+              <PhotoIcon className="w-12 h-12" />
+              <span className="text-xs mt-1">No poster</span>
+            </div>
+          )}
           <button
             title="Watch trailer"
             className="absolute inset-0 flex items-center justify-center text-white opacity-0 cursor-pointer group-hover:opacity-100 transition-all duration-300"
           >
             <div className="w-16 h-16 rounded-full bg-accent/30 hover:bg-accent-hover flex items-center justify-center transition-all duration-300">
-              <span className="text-3xl">▶️</span>
+              <PlayIcon className="w-8 h-8 text-white" />
             </div>
           </button>
           <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-4 opacity-0 cursor-pointer group-hover:opacity-100 transition-all duration-300">
@@ -43,13 +56,13 @@ export default function Card({ movie, genres }: CardProps) {
               title="Favorite"
               className="p-2 rounded-full bg-accent/30 hover:bg-accent-hover cursor-pointer transition-all duration-300"
             >
-              ❤️
+              <HeartIcon className="w-5 h-5 text-white" />
             </button>
             <button
               title="Look later"
               className="p-2 rounded-full bg-accent/30 hover:bg-accent-hover cursor-pointer transition-all duration-300"
             >
-              🔖
+              <BookmarkIcon className="w-5 h-5 text-white" />
             </button>
           </div>
         </div>
@@ -65,11 +78,12 @@ export default function Card({ movie, genres }: CardProps) {
           </div>
         </div>
         <div
-          className="absolute top-2 right-2 px-2 py-1 text-xs font-medium rounded-md
+          className="absolute top-2 right-2 flex gap-1 items-center px-2 py-1 text-xs font-medium rounded-md
                     bg-accent/80 text-white shadow-md opacity-0 group-hover:opacity-100
                     transition-all duration-300"
         >
-          ⭐ {movie.vote_average.toFixed(1)}
+          <StarIcon className="w-4 h-4 text-white" />{" "}
+          {movie.vote_average.toFixed(1)}
         </div>
       </Link>
     </>

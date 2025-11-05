@@ -10,7 +10,6 @@ export default async function MoviePage({
   params: { id: string };
 }) {
   const movie: MovieDetailsResponse = await getMovieDetails(params.id);
-  console.log(movie);
 
   const trailer = movie.videos?.results.find(
     (video) => video.type === "Trailer" && video.site === "YouTube"

@@ -1,5 +1,7 @@
+"use client";
 import { useTransition, useState, useEffect } from "react";
 import Link from "next/link";
+import SearchBar from "./SearchBar";
 
 export default function Header() {
   const [isPending, startTransition] = useTransition();
@@ -18,7 +20,7 @@ export default function Header() {
   
    const toggleTheme = async () => {
      const next = document.body.dataset.theme === "dark" ? "light" : "dark";
-     document.cookie = `theme=${next}; path=/; max-age=31536000`; // зберігаємо на рік
+     document.cookie = `theme=${next}; path=/; max-age=31536000`;
      document.body.dataset.theme = next;
       setTheme(next as "light" | "dark");
    };
@@ -28,7 +30,10 @@ export default function Header() {
                backdrop-blur-sm border-b border-border
                bg-[color-mix(in_oklab,var(--color-background)_90%,transparent)]"
     >
-      <Link href={'/'} className="text-xl font-semibold text-foreground">Movie App</Link>
+      <Link href={"/"} className="text-xl font-semibold text-foreground">
+        Movie App
+      </Link>
+      <SearchBar/>
       <button
         disabled={isPending}
         onClick={() => startTransition(toggleTheme)}

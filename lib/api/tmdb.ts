@@ -52,3 +52,15 @@ export const getMovieDetails = async (movieId: string) => {
   });
   return res.data;
 };
+
+export const getMoviesBySearch = async (query: string): Promise<MovieListResponse> => {
+  const res = await tmdbApi.get<MovieListResponse>("/search/movie", {
+    params: {
+      query,
+      language: "en-US",
+      include_adult: false,
+    },
+  });
+
+  return res.data;
+};

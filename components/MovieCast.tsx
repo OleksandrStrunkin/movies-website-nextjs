@@ -15,7 +15,7 @@ export default function MovieCast({ movie }: MovieCastProps) {
               key={actor.cast_id}
               className="flex flex-col items-center text-center"
             >
-              <div className="relative w-full aspect-square overflow-hidden mb-2 bg-foreground/10">
+              <div className="relative w-full md:w-[60%] aspect-square overflow-hidden mb-2 bg-foreground/10">
                 {actor.profile_path ? (
                   <Image
                     src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
