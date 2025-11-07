@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 const MONGO_URI = process.env.MONGODB_URI as string;
 
@@ -45,12 +46,14 @@ export async function POST(req: Request) {
       );
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10)
+
     // Створюємо користувача
-    const newUser = new User({ username, email, password });
+    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
 
     return NextResponse.json(
-      { message: "User created successfully", user: newUser },
+      { message: "User created successfully", user: {username, email} },
       { status: 201 }
     );
   } catch (err) {
