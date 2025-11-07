@@ -2,16 +2,15 @@
 import { useTransition, useState, useEffect } from "react";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
+import { useAuthStore } from "@/store/useAuthStore";
 import { UserIcon } from "@heroicons/react/24/outline";
 
 export default function Header() {
   const [isPending, startTransition] = useTransition();
   const [theme, setTheme] = useState<"light" | "dark" | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, token, logout } = useAuthStore();
 
   useEffect(() => {
-     const token = localStorage.getItem("token");
-     setIsLoggedIn(!!token);
      const cookieTheme = document.cookie
        .split("; ")
        .find((row) => row.startsWith("theme="))
@@ -38,19 +37,39 @@ export default function Header() {
         Movie App
       </Link>
       <SearchBar />
-      <div className="flex gap-2">
-        <Link
-          href={isLoggedIn ? "/profile" : "/login"}
-          className="p-2 rounded-full hover:bg-accent/10 transition-colors"
-        >
-          <UserIcon className="w-6 h-6 text-foreground" />
-        </Link>
+      <div className="flex gap-2 items-center">
+        {token ? (
+          <>
+            <span className="text-sm text-foreground/70">
+              {user?.username ?? "User"}
+            </span>
+            <Link
+              href="/profile"
+              className="p-2 rounded-full hover:bg-accent/10 transition"
+            >
+              <UserIcon className="w-6 h-6 text-foreground" />
+            </Link>
+            <button
+              onClick={logout}
+              className="text-xs px-3 py-1 rounded-md border border-border hover:bg-accent/10 transition"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <Link
+            href="/login"
+            className="p-2 rounded-full hover:bg-accent/10 transition"
+          >
+            <UserIcon className="w-6 h-6 text-foreground" />
+          </Link>
+        )}
+
         <button
           disabled={isPending}
           onClick={() => startTransition(toggleTheme)}
           className="p-1 rounded-full border border-border
-                   bg-card
-                   hover:bg-accent/10 
+                   bg-card hover:bg-accent/10 
                    transition-all duration-300 shadow-sm cursor-pointer"
         >
           {theme === "dark" ? "☀️" : "🌙"}
