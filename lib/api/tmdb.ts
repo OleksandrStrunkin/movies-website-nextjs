@@ -1,6 +1,7 @@
 import axios from "axios";
 import { MovieListResponse, GenreListResponse } from "../types/movie";
 import { MovieDetailsResponse } from "../types/details";
+import type { AxiosResponse } from "axios";
 
 export const TMDB_API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 
@@ -63,4 +64,26 @@ export const getMoviesBySearch = async (query: string): Promise<MovieListRespons
   });
 
   return res.data;
+};
+
+export const getMoviesByIds = async (movieIds: string[]) => {
+  try {
+    const requests = movieIds.map((id) =>
+      tmdbApi.get<MovieDetailsResponse>(`/movie/${id}`, {
+        params: { language: "en-US" },
+      })
+    );
+    const results = await Promise.allSettled(requests);
+
+    // Фільтруємо лише успішні
+    return results
+      .filter(
+        (r): r is PromiseFulfilledResult<AxiosResponse<MovieDetailsResponse>> =>
+          r.status === "fulfilled"
+      )
+      .map((r) => r.value.data);
+  } catch (err) {
+    console.error("Error fetching movies by IDs:", err);
+    return [];
+  }
 };

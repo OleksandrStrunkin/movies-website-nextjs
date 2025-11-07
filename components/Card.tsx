@@ -1,3 +1,7 @@
+"use client"
+
+import { useState } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
 import Image from "next/image";
 import Link from "next/link";
 import { Movie } from "@/lib/types/movie";
@@ -15,11 +19,45 @@ interface CardProps {
 }
 
 export default function Card({ movie, genres }: CardProps) {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const genresNames = movie.genre_ids
     .slice(0, 2)
     .map((id) => genres?.find((g) => g.id === id)?.name)
     .filter((name) => !!name)
     .join(", ");
+  
+  const handleFavorite = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    const token = useAuthStore.getState().token;
+    if (!token) {
+      alert("Please log in first.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/favorite", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ movieId: movie.id }),
+      });
+
+      const data = await res.json();
+      console.log("Added to favorites:", data);
+      setIsFavorite(data.message === "Added to favorites");
+    } catch (err) {
+      console.error("Error adding favorite:", err);
+    } finally {
+      setLoading(false)
+    }
+  };
+
+  
   return (
     <>
       <Link
@@ -53,8 +91,14 @@ export default function Card({ movie, genres }: CardProps) {
           </button>
           <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-4 opacity-0 cursor-pointer group-hover:opacity-100 transition-all duration-300">
             <button
+              onClick={handleFavorite}
               title="Favorite"
-              className="p-2 rounded-full bg-accent/30 hover:bg-accent-hover cursor-pointer transition-all duration-300"
+              disabled={loading}
+              className={`p-2 rounded-full cursor-pointer transition-all duration-300 ${
+                isFavorite
+                  ? "bg-red-500 hover:bg-red-600"
+                  : "bg-accent/30 hover:bg-accent-hover"
+              }`}
             >
               <HeartIcon className="w-5 h-5 text-white" />
             </button>

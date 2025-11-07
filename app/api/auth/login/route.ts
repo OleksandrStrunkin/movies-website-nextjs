@@ -1,30 +1,12 @@
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { connectDB } from "@/lib/mongodb";
+import User from "@/lib/models/User"
 
-const MONGO_URI = process.env.MONGODB_URI as string;
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
-if (!MONGO_URI) throw new Error("Missing MONGODB_URI in .env");
 if (!JWT_SECRET) throw new Error("Missing JWT_SECRET in .env");
-
-let isConnected = false;
-async function connectDB() {
-  if (isConnected) return;
-  await mongoose.connect(MONGO_URI);
-  isConnected = true;
-  console.log("✅ Connected to MongoDB");
-}
-
-// ✅ Схема користувача
-const userSchema = new mongoose.Schema({
-  username: String,
-  email: String,
-  password: String,
-});
-
-const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 // ✅ POST-запит — логін
 export async function POST(req: Request) {

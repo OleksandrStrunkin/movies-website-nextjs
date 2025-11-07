@@ -1,27 +1,7 @@
 import { NextResponse } from "next/server";
-import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-
-const MONGO_URI = process.env.MONGODB_URI as string;
-
-if (!MONGO_URI) throw new Error("Missing MONGODB_URI in .env");
-
-let isConnected = false;
-async function connectDB() {
-  if (isConnected) return;
-  await mongoose.connect(MONGO_URI);
-  isConnected = true;
-  console.log("✅ Connected to MongoDB");
-}
-
-// ✅ 2. Створюємо схему користувача
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-});
-
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+import { connectDB } from "@/lib/mongodb";
+import User from "@/lib/models/User";
 
 // ✅ 3. Обробка POST-запиту
 export async function POST(req: Request) {
