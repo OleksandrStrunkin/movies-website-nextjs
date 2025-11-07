@@ -2,10 +2,15 @@
 import { useState } from "react";
 import { useGenresQuery } from "@/lib/hook/queries/useGenresQuery";
 import MovieFilterView from "./MovieFilterView";
+import Filters from "./Filters";
 
 export default function GenresSection() {
   const { data: rawGenres, isError } = useGenresQuery();
+
   const [selectedGenreId, setSelectedGenreId] = useState<number>(0);
+  const [selectedYear, setSelectedYear] = useState<number | "">("");
+  const [selectedType, setSelectedType] = useState<"movie" | "tv">("movie");
+  const [page, setPage] = useState<number>(1);
 
   if (isError || !rawGenres) {
     return <div>Не вдалося завантажити жанри.</div>;
@@ -16,48 +21,69 @@ export default function GenresSection() {
     ...rawGenres.filter((g) => g.id !== 0),
   ];
 
-  const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const newGenreId = Number(event.target.value);
-    setSelectedGenreId(newGenreId);
-  };
+  const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setSelectedGenreId(Number(e.target.value));
+
+  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setSelectedYear(e.target.value ? Number(e.target.value) : "");
+
+  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    setSelectedType(e.target.value as "movie" | "tv");
+
+  const handleNextPage = () => setPage((p) => p + 1);
+  const handlePrevPage = () => setPage((p) => Math.max(1, p - 1));
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from(
+    { length: currentYear - 1979 },
+    (_, i) => currentYear - i
+  );
 
   return (
     <section className="my-10 px-4 container mx-auto">
       <h2 className="text-2xl font-semibold mb-6 text-text tracking-tight flex items-center gap-2">
-        🎬 Filter by Genre
+        🎬 Discover by Filters
       </h2>
-      <div className="relative inline-block w-full sm:w-72">
-        <select
-          value={selectedGenreId}
-          onChange={handleGenreChange}
-          className="
-                      w-full sm:w-72 appearance-none
-                      bg-card text-foreground
-                      px-4 py-2.5 rounded-xl
-                      border border-border
-                      shadow-sm
-                      ring-0 focus:outline-none focus:ring-2 focus:ring-accent  
-                      hover:border-accent
-                      transition-all duration-200 ease-in-out
-                      cursor-pointer
-                    "
+
+      {/* === FILTERS === */}
+
+     
+      <Filters
+        genres={genres}
+        selectedGenreId={selectedGenreId}
+        handleGenreChange={handleGenreChange}
+        selectedType={selectedType}
+        handleTypeChange={handleTypeChange}
+        selectedYear={selectedYear.toString()}
+        handleYearChange={handleYearChange}
+        years={years}
+      />
+
+      {/* === MOVIE LIST === */}
+      <MovieFilterView
+        id={selectedGenreId}
+        genres={rawGenres}
+        type={selectedType}
+        year={selectedYear}
+        page={page}
+      />
+
+      {/* === PAGINATION === */}
+      <div className="flex justify-center items-center gap-4 mt-10">
+        <button
+          onClick={handlePrevPage}
+          disabled={page === 1}
+          className="px-4 py-2 bg-accent text-white rounded-md hover:bg-accent-hover disabled:opacity-50 transition-all"
         >
-          {genres.map((genre) => (
-            <option
-              key={genre.id}
-              value={genre.id}
-              className="bg-card text-foreground hover:bg-accent hover:text-white"
-            >
-              {genre.name}
-            </option>
-          ))}
-        </select>
-        <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
-          ▼
-        </div>
-      </div>
-      <div className="mt-8">
-        <MovieFilterView id={selectedGenreId} genres={rawGenres} />
+          ← Prev
+        </button>
+        <span className="text-foreground/80 font-medium">Page {page}</span>
+        <button
+          onClick={handleNextPage}
+          className="px-4 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-all"
+        >
+          Next →
+        </button>
       </div>
     </section>
   );

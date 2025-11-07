@@ -114,7 +114,7 @@ export default function Card({ movie, genres }: CardProps) {
           <h3 className="text-xs text-foreground truncate">{movie.title}</h3>
           <div className="flex gap-1 items-">
             <span className="text-xs text-foreground">
-              {movie.release_date.slice(0, 4)}
+              {movie.release_date?.slice(0, 4)}
             </span>
             <span className="text-xs text-foreground/80 truncate">
               {genresNames}

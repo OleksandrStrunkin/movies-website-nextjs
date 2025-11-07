@@ -29,15 +29,24 @@ export const getGenres = async (): Promise<GenreListResponse["genres"]> => {
 };
 
 export const getMoviesByGenres = async (
-  genreIds: number[]
+  genreIds: number[],
+  type: "movie" | "tv" = "movie",
+  year?: number | "",
+  page: number = 1
 ): Promise<MovieListResponse> => {
   const genresString = genreIds.join(",");
 
-  const res = await tmdbApi.get<MovieListResponse>("/discover/movie", {
+  const res = await tmdbApi.get<MovieListResponse>(`/discover/${type}`, {
     params: {
       language: "en-US",
-      with_genres: genresString,
+      with_genres: genresString || undefined,
       sort_by: "popularity.desc",
+      ...(year
+        ? type === "movie"
+          ? { primary_release_year: year }
+          : { first_air_date_year: year }
+        : {}),
+      page,
     },
   });
 
@@ -74,8 +83,7 @@ export const getMoviesByIds = async (movieIds: string[]) => {
       })
     );
     const results = await Promise.allSettled(requests);
-
-    // Фільтруємо лише успішні
+    
     return results
       .filter(
         (r): r is PromiseFulfilledResult<AxiosResponse<MovieDetailsResponse>> =>
