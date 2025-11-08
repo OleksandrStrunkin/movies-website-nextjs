@@ -31,11 +31,9 @@ export default function LoginPage() {
 
       if (!res.ok) throw new Error(data.error || "Login failed");
 
-      // ✅ Зберігаємо користувача і токен у Zustand
       setUser(data.user);
       setToken(data.token);
 
-      // 🔁 Перенаправляємо на профіль
       router.push("/profile");
     } catch (err: any) {
       setError(err.message);
@@ -93,9 +91,9 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2 bg-accent text-accent-foreground rounded-md hover:opacity-90 transition cursor-pointer"
+          className="w-full py-2 bg-accent flex justify-center text-white rounded-md hover:opacity-90 transition cursor-pointer"
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? <span className="animate-spin w-8 h-8 border-4 border-white border-t-transparent rounded-full" /> : "Login"}
         </button>
         <p className="text-sm text-center mt-4 text-muted-foreground">
           Don't have an account yet?{" "}

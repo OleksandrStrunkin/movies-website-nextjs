@@ -8,46 +8,31 @@ import Filters from "./Filters";
 const TOTAL_PAGES_PLACEHOLDER = 50;
 const getPaginationPages = (currentPage: number, totalPages: number) => {
   const pageRange = [];
-  const maxButtons = 5;
+  const maxButtons = 5; 
 
-  // Додаємо першу сторінку
   if (totalPages > 0) pageRange.push(1);
-
-  // Визначаємо початок і кінець блоку навколо поточної сторінки
   let start = Math.max(2, currentPage - 1);
   let end = Math.min(totalPages - 1, currentPage + 1);
-
-  // Коригуємо діапазон, якщо він занадто малий, щоб уникнути виходу за межі
   if (currentPage < 3) end = Math.min(totalPages - 1, maxButtons - 2);
   if (currentPage > totalPages - 2)
     start = Math.max(2, totalPages - (maxButtons - 2));
-
-  // Якщо між 1 і початком є пропуск, додаємо '...'
   if (start > 2) {
     pageRange.push("...");
   }
-
-  // Додаємо сторінки в діапазоні
   for (let i = start; i <= end; i++) {
     if (i !== 1 && i !== totalPages) {
       pageRange.push(i);
     }
   }
-
-  // Якщо між кінцем і останньою сторінкою є пропуск, додаємо '...'
   if (end < totalPages - 1 && totalPages > maxButtons) {
     pageRange.push("...");
   }
-
-  // Додаємо останню сторінку, якщо вона не 1 і ще не додана
   if (totalPages > 1 && !pageRange.includes(totalPages)) {
     pageRange.push(totalPages);
   }
 
   return pageRange;
 };
-
-// Компонент, який обробляє логіку кнопок
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -66,7 +51,7 @@ const PaginationButtons = ({
   );
 
   const buttonClass = (pageNumber: number) =>
-    `px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200 
+    `px-3 py-1 rounded-md text-sm font-medium transition-colors duration-300 
          ${
            pageNumber === currentPage
              ? "bg-accent text-white"
@@ -145,9 +130,7 @@ export default function GenresSection() {
       <h2 className="text-2xl font-semibold mb-6 text-text tracking-tight flex items-center gap-2">
         🎬 Discover by Filters
       </h2>
-
       {/* === FILTERS === */}
-
       <Filters
         genres={genres}
         selectedGenreId={selectedGenreId}
@@ -158,7 +141,6 @@ export default function GenresSection() {
         handleYearChange={handleYearChange}
         years={years}
       />
-
       {/* === MOVIE LIST === */}
       <MovieFilterView
         id={selectedGenreId}
@@ -167,7 +149,6 @@ export default function GenresSection() {
         year={selectedYear}
         page={page}
       />
-
       {/* === PAGINATION === */}
       <div className="flex justify-center items-center gap-2 mt-10">
         <button
@@ -177,7 +158,6 @@ export default function GenresSection() {
         >
           <ChevronLeftIcon className="w-5 h-5" />
         </button>
-        {/* КНОПКИ НОМЕРІВ СТОРІНОК */}
         <PaginationButtons
           currentPage={page}
           totalPages={totalPages}
