@@ -24,13 +24,13 @@ export default function Filters({
   years,
 }: FiltersProps) {
   const baseSelect =
-    "relative appearance-none bg-card text-foreground px-4 py-2.5 rounded-xl border border-border shadow-sm focus:ring-2 focus:ring-accent hover:border-accent transition-all duration-200 ease-in-out cursor-pointer pr-10";
+    "relative appearance-none w-full bg-card text-foreground px-4 py-2.5 rounded-xl border border-border shadow-sm focus:outline-none hover:border-accent transition-all duration-200 ease-in-out cursor-pointer pr-10";
 
   const SelectWrapper = ({ children }: { children: React.ReactNode }) => (
-    <div className="relative w-36 sm:w-44">
+    <div className="relative w-full md:w-36 sm:w-44">
       {children}
       <ChevronDownIcon
-        className="absolute right-0 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none w-5 h-5"
+        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none w-5 h-5"
         strokeWidth={1.7}
       />
     </div>
@@ -60,8 +60,8 @@ export default function Filters({
           onChange={handleTypeChange}
           className={baseSelect}
         >
-          <option value="movie">🎬 Movies</option>
-          <option value="tv">📺 Series</option>
+          <option value="movie">Movies</option>
+          <option value="tv">Series</option>
         </select>
       </SelectWrapper>
 
@@ -72,7 +72,7 @@ export default function Filters({
           onChange={handleYearChange}
           className={baseSelect}
         >
-          <option value="">📅 All years</option>
+          <option value="">All years</option>
           {years.map((year) => (
             <option key={year} value={year}>
               {year}

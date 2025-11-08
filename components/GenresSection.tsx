@@ -47,7 +47,6 @@ export default function GenresSection() {
 
       {/* === FILTERS === */}
 
-     
       <Filters
         genres={genres}
         selectedGenreId={selectedGenreId}
