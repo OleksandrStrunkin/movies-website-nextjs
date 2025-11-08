@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Movie } from "@/lib/types/movie";
 
 interface HeroBannerProps {
@@ -38,7 +39,13 @@ export default function HeroBanner({ movies }: HeroBannerProps) {
                 {heroMovie.title}
               </h2>
               <div className="flex justify-center md:justify-start items-center gap-4 mb-3 text-muted">
-                <span>{heroMovie.release_date}</span>
+                <span>
+                  {new Date(heroMovie.release_date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
                 <span className="px-2 py-1 rounded-md bg-accent/20 text-accent font-semibold">
                   ⭐ {heroMovie.vote_average}
                 </span>
@@ -46,13 +53,14 @@ export default function HeroBanner({ movies }: HeroBannerProps) {
               <p className="text-lg leading-relaxed mb-8 text-muted line-clamp-5">
                 {heroMovie.overview}
               </p>
-              <button
+              <Link
+                href={`/movie/${heroMovie.id}`}
                 className="self-center md:self-start bg-accent hover:bg-accent-hover 
                      text-white font-semibold py-3 px-6 rounded-lg shadow-md 
                      transition-all duration-300"
               >
                 🎬 Watch Trailer
-              </button>
+              </Link>
             </div>
           </div>
         </section>
@@ -60,9 +68,3 @@ export default function HeroBanner({ movies }: HeroBannerProps) {
     </>
   );
 }
-
-//  <section
-//           className={`relative h-196 bg-cover flex items-center justify-center mask-alpha mask-b-from-black mask-b-from-20% mask-b-to-transparent`}
-//           style={{
-//             backgroundImage: `url(https://image.tmdb.org/t/p/original${heroMovie?.backdrop_path})`,
-//           }}
