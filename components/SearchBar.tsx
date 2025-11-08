@@ -1,12 +1,13 @@
 "use client";
 
+import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getMoviesBySearch } from "@/lib/api/tmdb";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
-import Image from "next/image";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function SearchBar() {
   const [term, setTerm] = useState("");
@@ -24,31 +25,49 @@ export default function SearchBar() {
     enabled: debouncedTerm.length > 1,
   });
 
-    const results = data?.results?.slice(0, 6) || [];
+  const results = data?.results?.slice(0, 6) || [];
+
+  const handleClear = () => {
+    setTerm("");
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (term.trim()) router.push(`/search?query=${encodeURIComponent(term)}`);
-      setTerm("")
-      
+    e.preventDefault();
+    if (term.trim()) router.push(`/search?query=${encodeURIComponent(term)}`);
+    setTerm("");
   };
 
   return (
-    <div className="relative w-64">
-      <form onSubmit={handleSubmit}>
+    <div className="relative md:w-92">
+      <button type="button" className="md:hidden">
+        <MagnifyingGlassIcon className="h-5 w-5" />
+      </button>
+      <form onSubmit={handleSubmit} className="hidden md:block">
         <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-color-text/60" />
         <input
           type="text"
           placeholder="Search movies..."
           value={term}
           onChange={(e) => setTerm(e.target.value)}
-          className="w-full rounded-xl bg-transparent pl-10 pr-4 py-2 border border-border text-color-text focus:outline-none focus:border-accent transition"
+          className="w-full shadow-xl rounded-xl bg-transparent pl-10 pr-4 py-2 border border-border
+          text-color-text focus:outline-none focus:border-accent transition"
         />
+        {term.length > 0 && (
+          <button
+            type="button"
+            onClick={handleClear}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1"
+            aria-label="Clear search input"
+          >
+            <XMarkIcon className="w-5 h-5" />
+          </button>
+        )}
       </form>
       {term && results.length > 0 && (
         <ul
-          className="absolute top-full left-0 mt-2 w-full rounded-xl bg-card border border-border shadow-lg 
-               overflow-visible z-50 py-2 backdrop-blur-md"
+          className="fixed top-full left-0 w-full max-h-screen md:absolute md:w-full rounded-none md:rounded-xl 
+               bg-card border-none md:border border-border shadow-none md:shadow-lg overflow-y-auto 
+               z-50 py-2 backdrop-blur-md"
         >
           {results.map((movie) => (
             <li key={movie.id} className="border-b-1">
@@ -58,16 +77,16 @@ export default function SearchBar() {
                 onClick={() => setTerm("")}
               >
                 {movie.poster_path ? (
-                  <div className="relative w-12 h-16 overflow-hidden rounded-md flex-shrink-0">
+                  <div className="relative w-16 h-16 overflow-hidden rounded-md flex-shrink-0">
                     <Image
                       src={`https://image.tmdb.org/t/p/w185${movie.poster_path}`}
                       alt={movie.title}
                       fill
-                      className="object-cover rounded-md group-hover:scale-105 transition-transform duration-300"
+                      className="object-cover rounded-md transition-transform duration-300"
                     />
                   </div>
                 ) : (
-                  <div className="w-12 h-16 bg-border rounded-md flex items-center justify-center text-xs text-color-text/50">
+                  <div className="w-16 h-16 bg-border rounded-md flex items-center justify-center text-xs text-color-text/50">
                     N/A
                   </div>
                 )}
