@@ -42,7 +42,7 @@ export default function SearchBar() {
           placeholder="Search movies..."
           value={term}
           onChange={(e) => setTerm(e.target.value)}
-          className="w-full rounded-xl bg-color-card pl-10 pr-4 py-2 text-color-text placeholder:text-color-text/50 focus:outline-none focus:ring-1 focus:ring-color-accent transition"
+          className="w-full rounded-xl bg-transparent pl-10 pr-4 py-2 border border-border text-color-text focus:outline-none focus:border-accent transition"
         />
       </form>
       {term && results.length > 0 && (
