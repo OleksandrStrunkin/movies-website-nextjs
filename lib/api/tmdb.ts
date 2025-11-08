@@ -49,7 +49,6 @@ export const getMoviesByGenres = async (
       page,
     },
   });
-
   return res.data;
 };
 

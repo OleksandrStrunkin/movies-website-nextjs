@@ -1,8 +1,103 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useGenresQuery } from "@/lib/hook/queries/useGenresQuery";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import MovieFilterView from "./MovieFilterView";
 import Filters from "./Filters";
+
+const TOTAL_PAGES_PLACEHOLDER = 50;
+const getPaginationPages = (currentPage: number, totalPages: number) => {
+  const pageRange = [];
+  const maxButtons = 5;
+
+  // Додаємо першу сторінку
+  if (totalPages > 0) pageRange.push(1);
+
+  // Визначаємо початок і кінець блоку навколо поточної сторінки
+  let start = Math.max(2, currentPage - 1);
+  let end = Math.min(totalPages - 1, currentPage + 1);
+
+  // Коригуємо діапазон, якщо він занадто малий, щоб уникнути виходу за межі
+  if (currentPage < 3) end = Math.min(totalPages - 1, maxButtons - 2);
+  if (currentPage > totalPages - 2)
+    start = Math.max(2, totalPages - (maxButtons - 2));
+
+  // Якщо між 1 і початком є пропуск, додаємо '...'
+  if (start > 2) {
+    pageRange.push("...");
+  }
+
+  // Додаємо сторінки в діапазоні
+  for (let i = start; i <= end; i++) {
+    if (i !== 1 && i !== totalPages) {
+      pageRange.push(i);
+    }
+  }
+
+  // Якщо між кінцем і останньою сторінкою є пропуск, додаємо '...'
+  if (end < totalPages - 1 && totalPages > maxButtons) {
+    pageRange.push("...");
+  }
+
+  // Додаємо останню сторінку, якщо вона не 1 і ще не додана
+  if (totalPages > 1 && !pageRange.includes(totalPages)) {
+    pageRange.push(totalPages);
+  }
+
+  return pageRange;
+};
+
+// Компонент, який обробляє логіку кнопок
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  setPage: (page: number) => void;
+}
+
+const PaginationButtons = ({
+  currentPage,
+  totalPages,
+  setPage,
+}: PaginationProps) => {
+  // Використовуємо useMemo, щоб не перераховувати список сторінок при кожному рендері
+  const pages = useMemo(
+    () => getPaginationPages(currentPage, totalPages),
+    [currentPage, totalPages]
+  );
+
+  const buttonClass = (pageNumber: number) =>
+    `px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200 
+         ${
+           pageNumber === currentPage
+             ? "bg-accent text-white"
+             : "bg-card text-foreground hover:bg-muted"
+         }`;
+
+  const handleGoToPage = (pageNumber: string | number) => {
+    if (typeof pageNumber === "number") {
+      setPage(pageNumber);
+    }
+  };
+
+  return (
+    <>
+      {pages.map((p, index) => (
+        <div key={index}>
+          {p === "..." ? (
+            <span className="text-foreground/60 px-3 py-1">...</span>
+          ) : (
+            <button
+              onClick={() => handleGoToPage(p)}
+              className={buttonClass(Number(p))}
+            >
+              {p}
+            </button>
+          )}
+        </div>
+      ))}
+    </>
+  );
+};
 
 export default function GenresSection() {
   const { data: rawGenres, isError } = useGenresQuery();
@@ -10,7 +105,9 @@ export default function GenresSection() {
   const [selectedGenreId, setSelectedGenreId] = useState<number>(0);
   const [selectedYear, setSelectedYear] = useState<number | "">("");
   const [selectedType, setSelectedType] = useState<"movie" | "tv">("movie");
+
   const [page, setPage] = useState<number>(1);
+  const totalPages = TOTAL_PAGES_PLACEHOLDER;
 
   if (isError || !rawGenres) {
     return <div>Не вдалося завантажити жанри.</div>;
@@ -30,8 +127,12 @@ export default function GenresSection() {
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setSelectedType(e.target.value as "movie" | "tv");
 
-  const handleNextPage = () => setPage((p) => p + 1);
-  const handlePrevPage = () => setPage((p) => Math.max(1, p - 1));
+  const handleSetPage = (newPage: number) => {
+    setPage(Math.max(1, Math.min(newPage, totalPages)));
+  };
+
+  const handleNextPage = () => handleSetPage(page + 1);
+  const handlePrevPage = () => handleSetPage(page - 1);
 
   const currentYear = new Date().getFullYear();
   const years = Array.from(
@@ -68,20 +169,26 @@ export default function GenresSection() {
       />
 
       {/* === PAGINATION === */}
-      <div className="flex justify-center items-center gap-4 mt-10">
+      <div className="flex justify-center items-center gap-2 mt-10">
         <button
           onClick={handlePrevPage}
           disabled={page === 1}
-          className="px-4 py-2 bg-accent text-white rounded-md hover:bg-accent-hover disabled:opacity-50 transition-all"
+          className="p-2 border border-border rounded-md hover:bg-muted disabled:opacity-50 transition-colors"
         >
-          ← Prev
+          <ChevronLeftIcon className="w-5 h-5" />
         </button>
-        <span className="text-foreground/80 font-medium">Page {page}</span>
+        {/* КНОПКИ НОМЕРІВ СТОРІНОК */}
+        <PaginationButtons
+          currentPage={page}
+          totalPages={totalPages}
+          setPage={handleSetPage}
+        />
         <button
           onClick={handleNextPage}
-          className="px-4 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition-all"
+          disabled={page === totalPages}
+          className="p-2 border border-border rounded-md hover:bg-muted disabled:opacity-50 transition-colors"
         >
-          Next →
+        <ChevronRightIcon className="w-5 h-5" />
         </button>
       </div>
     </section>
