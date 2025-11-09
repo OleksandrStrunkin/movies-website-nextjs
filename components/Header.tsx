@@ -33,14 +33,15 @@ export default function Header() {
                backdrop-blur-sm border-b border-border
                bg-[color-mix(in_oklab,var(--color-background)_90%,transparent)]"
     >
-      <Link href={"/"} className="text-sm md:text-xl font-semibold text-foreground">
+      <Link
+        href={"/"}
+        className="text-sm md:text-xl font-semibold text-foreground"
+      >
         Movie App
       </Link>
-      {/* <Link href={"/"} className="text-xl font-semibold text-foreground">
-        M. A.
-      </Link> */}
-      <SearchBar />
+      <div className="hidden md:block"><SearchBar /></div>
       <div className="flex gap-2 items-center">
+        <div className="block md:hidden"><SearchBar /></div>
         {token ? (
           <>
             <span className="hidden md:block text-sm text-foreground/70">
