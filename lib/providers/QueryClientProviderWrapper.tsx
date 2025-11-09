@@ -2,6 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
+import { SessionProvider } from "next-auth/react";
 
 import Header from "@/components/Header";
 
@@ -13,9 +14,11 @@ export default function QueryClientProviderWrapper({
   children: ReactNode;
 }) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Header />
-      {children}
-    </QueryClientProvider>
+    <SessionProvider>
+      <QueryClientProvider client={queryClient}>
+        <Header />
+        {children}
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }

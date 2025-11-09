@@ -3,11 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import { getMoviesByIds } from "@/lib/api/tmdb";
 import { updateUsername } from "@/lib/api/user";
+
+
 
 interface FavoriteMovie {
   id: number;
@@ -19,10 +20,11 @@ export default function ProfilePage() {
   const { user, setUser, logout, token } = useAuthStore();
   const router = useRouter();
 
+  
+
   const [favorites, setFavorites] = useState<FavoriteMovie[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Для редагування імені
   const [editingName, setEditingName] = useState(user?.username || "");
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -33,7 +35,6 @@ export default function ProfilePage() {
     router.push("/");
   };
 
-  // Загрузка улюблених фільмів
   useEffect(() => {
     if (!token) return;
     const fetchFavorites = async () => {
@@ -55,7 +56,6 @@ export default function ProfilePage() {
     fetchFavorites();
   }, [token]);
 
-  // PUT-запит для оновлення імені
   const handleSave = async () => {
     if (!editingName.trim()) {
       setMessage("Name cannot be empty");
@@ -90,6 +90,7 @@ export default function ProfilePage() {
             Go to Login
           </button>
         </div>
+        
       </div>
     );
   }
