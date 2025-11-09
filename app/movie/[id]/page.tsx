@@ -64,11 +64,6 @@ export default async function MoviePage({
                               />
                             </div>
                           )}
-                          {/* {!company.logo_path && (
-                            <span className="text-sm text-foreground/80">
-                              {company.name}
-                            </span>
-                          )} */}
                         </div>
                       ))}
                     </div>
