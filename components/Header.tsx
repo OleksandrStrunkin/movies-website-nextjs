@@ -3,12 +3,23 @@ import { useTransition, useState, useEffect } from "react";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import { useAuthStore } from "@/store/useAuthStore";
+import { signOut } from "next-auth/react";
 import { UserIcon } from "@heroicons/react/24/outline";
+import { Single_Day } from "next/font/google";
 
 export default function Header() {
   const [isPending, startTransition] = useTransition();
   const [theme, setTheme] = useState<"light" | "dark" | null>(null);
   const { user, token, logout } = useAuthStore();
+
+  const handleLogout = async () => {
+    try {
+      logout();
+      await signOut({ redirect: false });
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
+  }
 
   useEffect(() => {
      const cookieTheme = document.cookie
@@ -54,10 +65,10 @@ export default function Header() {
               <UserIcon className="w-6 h-6 text-foreground" />
             </Link>
             <button
-              onClick={logout}
+              onClick={handleLogout}
               className="text-xs px-3 py-1 rounded-md border border-border hover:bg-accent/10 transition"
             >
-              Logout
+              Exit
             </button>
           </>
         ) : (

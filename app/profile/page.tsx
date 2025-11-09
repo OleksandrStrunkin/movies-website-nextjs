@@ -7,6 +7,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import { getMoviesByIds } from "@/lib/api/tmdb";
 import { updateUsername } from "@/lib/api/user";
+import { signOut } from "next-auth/react";
 
 
 
@@ -20,8 +21,6 @@ export default function ProfilePage() {
   const { user, setUser, logout, token } = useAuthStore();
   const router = useRouter();
 
-  
-
   const [favorites, setFavorites] = useState<FavoriteMovie[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -30,9 +29,14 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleLogout = () => {
-    logout();
-    router.push("/");
+  const handleLogout = async () => {
+    try {
+      logout();
+      await signOut({ redirect: false });
+      router.push("/");
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
   };
 
   useEffect(() => {

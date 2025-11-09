@@ -3,9 +3,14 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { registerUser } from "@/lib/api/auth";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function RegisterPage() {
   const router = useRouter();
+
+  const { setUser, setToken } = useAuthStore();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,17 +23,13 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password }),
-      });
 
-      const data = await res.json();
+      const data = await registerUser(username, email, password)
 
-      if (!res.ok) throw new Error(data.error || "Registration failed");
+      setUser(data.user);
+      setToken(data.token);
 
-      router.push("/login");
+      router.push("/profile");
     } catch (err: any) {
       setError(err.message);
     } finally {

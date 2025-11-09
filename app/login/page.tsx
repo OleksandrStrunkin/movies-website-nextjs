@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { loginUser } from "@/lib/api/auth";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -23,14 +24,35 @@ useEffect(() => {
     setUser({
       username: session.user.name || "",
       email: session.user.email || "",
-      _id: session.user.id || "", // якщо хочеш зберігати id
+      _id: session.user.id || "",
     });
     // Токен NextAuth зазвичай не потрібен, але можна зберегти
-    setToken(session.id as string);
+    // setToken(session.id as string);
 
-    router.push("/profile"); // редірект після логіну
+    // router.push("/profile"); // редірект після логіну
   }
 }, [session, setUser, setToken, router]);
+  
+  useEffect(() => {
+    if (session?.user) {
+      fetch("/api/auth/google-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: session.user.email,
+          username: session.user.name,
+          googleId: session.user.id,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setUser(data.user);
+          setToken(data.token);
+          router.push("/profile");
+        })
+        .catch((err) => console.error("Google login backend error:", err));
+    }
+  }, [session]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,15 +60,8 @@ useEffect(() => {
     setError("");
 
     try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
 
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || "Login failed");
+      const data = await loginUser(email, password)
 
       setUser(data.user);
       setToken(data.token);
@@ -124,13 +139,15 @@ useEffect(() => {
         </p>
         {!session ? (
           <button
+            type="button"
             onClick={() => signIn("google")}
             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
           >
             Sign in with Google
           </button>
         ) : (
-          <button
+            <button
+            type="button"
             onClick={() => signOut()}
             className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
           >
