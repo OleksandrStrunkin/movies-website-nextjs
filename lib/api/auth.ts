@@ -10,7 +10,6 @@ export async function loginUser(email: string, password: string) {
   if (!res.ok) {
     throw new Error(data.error || "Login failed");
   }
-
   return data;
 }
 

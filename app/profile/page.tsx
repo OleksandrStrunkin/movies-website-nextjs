@@ -20,6 +20,7 @@ interface FavoriteMovie {
 
 export default function ProfilePage() {
   const { user, setUser, logout, token } = useAuthStore();
+  console.log(user)
   const router = useRouter();
 
   const {
@@ -89,7 +90,7 @@ export default function ProfilePage() {
       { newName: editingName, token },
       {
         onSuccess: (data) => {
-          setUser(data.user);
+          setUser({...user!, username: data.username || user!.username});
           console.log(data)
           setMessage("Name updated successfully!");
           setIsEditing(false);

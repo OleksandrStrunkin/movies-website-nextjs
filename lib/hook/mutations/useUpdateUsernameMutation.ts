@@ -8,8 +8,8 @@ interface UpdateUsernameVariables {
 }
 
 interface UpdateUsernameResponse {
-  user: User;
-  message?: string;
+  username: string;
+  message: string;
 }
 
 export const useUpdateUsernameMutation = () => {
@@ -18,7 +18,7 @@ export const useUpdateUsernameMutation = () => {
     mutationFn: ({ newName, token }) => updateUsername(newName, token),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["profile"] });
-      console.log("Ok:", data.user.username);
+      
     },
     onError: (error) => {
       console.error("Error:", error.message);

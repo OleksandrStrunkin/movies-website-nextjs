@@ -26,10 +26,6 @@ useEffect(() => {
       email: session.user.email || "",
       _id: session.user.id || "",
     });
-    // Токен NextAuth зазвичай не потрібен, але можна зберегти
-    // setToken(session.id as string);
-
-    // router.push("/profile"); // редірект після логіну
   }
 }, [session, setUser, setToken, router]);
   
