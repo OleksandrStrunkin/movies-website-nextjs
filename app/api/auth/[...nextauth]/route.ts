@@ -62,10 +62,8 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({
       user,
-      account,
       profile,
     }: SignInCallbackParams): Promise<boolean> {
-      // Підключаємо базу
       await connectDB();
 
       const existingUser = await User.findOne({ email: user.email });

@@ -24,7 +24,6 @@ useEffect(() => {
     setUser({
       username: session.user.name || "",
       email: session.user.email || "",
-      _id: session.user.id || "",
     });
   }
 }, [session, setUser, setToken, router]);
@@ -37,11 +36,11 @@ useEffect(() => {
         body: JSON.stringify({
           email: session.user.email,
           username: session.user.name,
-          googleId: session.user.id,
         }),
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data)
           setUser(data.user);
           setToken(data.token);
           router.push("/profile");
