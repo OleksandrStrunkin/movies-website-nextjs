@@ -24,7 +24,7 @@ export default function Filters({
   years,
 }: FiltersProps) {
   const baseSelect =
-    "relative appearance-none w-full bg-card text-foreground px-4 py-2.5 rounded-xl border border-border shadow-sm focus:outline-none hover:border-accent transition-all duration-200 ease-in-out cursor-pointer pr-10";
+    "relative appearance-none w-full bg-card text-foreground px-4 py-2.5 rounded - xl border border - border shadow - sm focus: outline - none hover: border - accent transition - all duration - 200 ease -in -out cursor - pointer pr - 10";
 
   const SelectWrapper = ({ children }: { children: React.ReactNode }) => (
     <div className="relative w-full md:w-36 sm:w-44">

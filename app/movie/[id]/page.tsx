@@ -122,34 +122,4 @@ export default async function MoviePage({
       </div>
     </section>
   );
-}
-
-{
-  /* <div className="container mx-auto px-6 py-10 grid md:grid-cols-3 gap-10">
-  <div className="relative w-full aspect-[2/3] rounded-xl overflow-hidden shadow-lg">
-    <Image
-      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-      alt={movie.title}
-      fill
-      className="object-cover"
-    />
-  </div>
-
-  <div className="md:col-span-2 space-y-6">
-    <h2 className="text-2xl font-semibold">Про фільм</h2>
-    <p className="text-foreground/80 leading-relaxed">{movie.overview}</p>
-
-    <div className="flex flex-wrap gap-4 mt-4">
-      <div>
-        <strong>Genres:</strong> {movie.genres.map((g) => g.name).join(", ")}
-      </div>
-      <div>
-        <strong>Release date:</strong> {movie.release_date}
-      </div>
-      <div>
-        <strong>Duration:</strong> {movie.runtime} хв
-      </div>
-    </div>
-  </div>
-</div>; */
-}
+};

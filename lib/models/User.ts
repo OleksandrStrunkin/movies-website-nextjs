@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String }, // не required
+  password: { type: String },
   favorites: { type: [Number], default: [] },
-  googleId: { type: String }, // опційно
+  googleId: { type: String },
 });
 
 export default mongoose.models.User || mongoose.model("User", userSchema);

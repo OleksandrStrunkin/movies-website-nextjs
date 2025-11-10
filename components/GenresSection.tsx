@@ -95,7 +95,7 @@ export default function GenresSection() {
   const totalPages = TOTAL_PAGES_PLACEHOLDER;
 
   if (isError || !rawGenres) {
-    return <div>Не вдалося завантажити жанри.</div>;
+    return <div>Failed to load genres.</div>;
   }
 
   const genres = [

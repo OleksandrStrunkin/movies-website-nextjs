@@ -5,7 +5,6 @@ import SearchBar from "./SearchBar";
 import { useAuthStore } from "@/store/useAuthStore";
 import { signOut } from "next-auth/react";
 import { UserIcon } from "@heroicons/react/24/outline";
-import { Single_Day } from "next/font/google";
 
 export default function Header() {
   const [isPending, startTransition] = useTransition();

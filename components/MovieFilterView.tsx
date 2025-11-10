@@ -35,13 +35,13 @@ export default function MovieFilterView({
   }
 
   if (isError) {
-    return <div>Помилка завантаження фільмів.</div>;
+    return <div>failed to download movies</div>;
   }
 
   if (!movies?.results?.length) {
     return (
       <p className="text-center text-foreground/60 mt-8">
-        Нічого не знайдено за вибраними фільтрами 🎞️
+        Nothing found for the selected filters
       </p>
     );
   }

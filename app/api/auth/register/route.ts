@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/lib/models/User";
 
-// ✅ 3. Обробка POST-запиту
 export async function POST(req: Request) {
   try {
     await connectDB();
@@ -17,7 +16,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Перевіряємо чи користувач вже існує
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
@@ -28,7 +26,6 @@ export async function POST(req: Request) {
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    // Створюємо користувача
     const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
 

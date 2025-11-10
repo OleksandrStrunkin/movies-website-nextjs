@@ -7,7 +7,6 @@ export async function PUT(req: Request) {
   try {
     await connectDB();
 
-    // 1️⃣ Отримуємо токен з headers
     const authHeader = req.headers.get("authorization");
     if (!authHeader?.startsWith("Bearer ")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -16,7 +15,6 @@ export async function PUT(req: Request) {
     const token = authHeader.split(" ")[1];
     const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
 
-    // 2️⃣ Отримуємо нове ім’я з body
     const { username } = await req.json();
     if (!username) {
       return NextResponse.json(
@@ -25,7 +23,6 @@ export async function PUT(req: Request) {
       );
     }
 
-    // 3️⃣ Оновлюємо користувача
     const updatedUser = await User.findByIdAndUpdate(
       decoded.id,
       { username },

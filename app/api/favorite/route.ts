@@ -5,8 +5,6 @@ import { connectDB } from "@/lib/mongodb";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
-
-// Middleware: перевірка токена
 async function verifyToken(req: Request) {
   const authHeader = req.headers.get("authorization");
   if (!authHeader) return null;
@@ -20,7 +18,6 @@ async function verifyToken(req: Request) {
   }
 }
 
-// ⬇️ Додати або прибрати з улюблених
 export async function POST(req: Request) {
   try {
     await connectDB();
@@ -55,7 +52,6 @@ export async function POST(req: Request) {
   }
 }
 
-// ⬇️ Отримати улюблені
 export async function GET(req: Request) {
   try {
     await connectDB();

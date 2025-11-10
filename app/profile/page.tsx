@@ -101,9 +101,7 @@ export default function ProfilePage() {
 
   return (
     <div className="container mx-auto min-h-screen flex flex-col lg:flex-row gap-6 items-start justify-start text-foreground bg-background px-6 md:py-12">
-      {/* Блок профілю */}
       <div className="border border-border rounded-xl p-6 shadow-lg w-full lg:max-w-[450px] bg-card">
-        {/* Заголовок + Logout */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-semibold">Profile</h1>
           <button
@@ -114,18 +112,12 @@ export default function ProfilePage() {
             Log Out
           </button>
         </div>
-
-        {/* Основний контент: Аватар + дані */}
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-          {/* Аватар */}
           <div className="flex-shrink-0 w-24 h-24 rounded-full bg-accent/20 flex items-center 
           justify-center text-4xl font-bold text-accent shadow-inner">
             {user.username.charAt(0).toUpperCase()}
           </div>
-
-          {/* Дані користувача */}
           <div className="flex-1 flex flex-col gap-2 w-full">
-            {/* Ім'я або редагування */}
             {!isEditing ? (
               <div className="flex items-center gap-2 flex-wrap">
                 <p className="text-lg font-medium">{user.username}</p>
@@ -168,14 +160,10 @@ export default function ProfilePage() {
                 )}
               </div>
             )}
-
-            {/* Email */}
             <p className="text-sm text-foreground/60">{user.email}</p>
           </div>
         </div>
       </div>
-
-      {/* Блок улюблених фільмів */}
       <div className="bg-card border border-border rounded-xl p-2 md:p-6 shadow-lg w-full">
         <h2 className="text-xl font-semibold mb-4 text-center md:text-left">
           Favorite Movies

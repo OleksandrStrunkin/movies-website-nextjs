@@ -1,4 +1,3 @@
-// 📁 /lib/hook/queries/useMoviesByGenresQuery.ts
 import { useQuery } from "@tanstack/react-query";
 import { getMoviesByGenres } from "@/lib/api/tmdb";
 

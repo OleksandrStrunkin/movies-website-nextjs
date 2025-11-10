@@ -8,7 +8,6 @@ const JWT_SECRET = process.env.JWT_SECRET as string;
 
 if (!JWT_SECRET) throw new Error("Missing JWT_SECRET in .env");
 
-// ✅ POST-запит — логін
 export async function POST(req: Request) {
   try {
     await connectDB();
@@ -27,7 +26,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // ✅ Перевіряємо пароль
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return NextResponse.json(
@@ -35,8 +33,7 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
-
-    // ✅ Створюємо токен
+    
     const token = jwt.sign(
       { id: user._id, email: user.email },
       JWT_SECRET,

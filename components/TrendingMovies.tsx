@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import Card from "./Card";
-import SkeletonCard from "./Skeleton/SkeletonCard";
 
 import { Movie } from "@/lib/types/movie";
 
@@ -17,14 +16,9 @@ interface TrendingMoviesProps {
 }
 
 export default function TrendingMovies({ movies }: TrendingMoviesProps) {
-  // const { data: movies, isLoading, isError } = useTrendingMoviesQuery();
-
-  // if (isLoading) {
-  //   return <div className="w-full h-[330px] bg-muted animate-pulse container mx-auto rounded-2xl"/>
-  // }
 
   if (!movies || movies.length === 0) {
-    return <div>Не вдалося завантажити трендові фільми.</div>;
+    return <div>failed to download movies</div>;
   }
 
   return (
