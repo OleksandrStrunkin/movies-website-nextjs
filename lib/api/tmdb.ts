@@ -74,7 +74,7 @@ export const getMoviesBySearch = async (query: string): Promise<MovieListRespons
   return res.data;
 };
 
-export const getMoviesByIds = async (movieIds: string[]) => {
+export const getMoviesByIds = async (movieIds: number[]) => {
   try {
     const requests = movieIds.map((id) =>
       tmdbApi.get<MovieDetailsResponse>(`/movie/${id}`, {

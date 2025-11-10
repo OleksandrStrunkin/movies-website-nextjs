@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import { getMoviesByIds } from "@/lib/api/tmdb";
-import { fetchFavorites } from "@/lib/api/favorite";
-import { updateUsername } from "@/lib/api/user";
+
 import { signOut } from "next-auth/react";
+
+import { useFavoritesQuery } from "@/lib/hook/queries/useFavoritesQuery";
+import { useUpdateUsernameMutation } from "@/lib/hook/mutations/useUpdateUsernameMutation";
 
 interface FavoriteMovie {
   id: number;
@@ -20,13 +22,21 @@ export default function ProfilePage() {
   const { user, setUser, logout, token } = useAuthStore();
   const router = useRouter();
 
+  const {
+    data: favoriteIdsResponse,
+    isLoading: isLoadingFavorites,
+    isError: isErrorFavorites,
+    error: errorFavorites,
+  } = useFavoritesQuery({ token });
+
   const [favorites, setFavorites] = useState<FavoriteMovie[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoadingMovies, setIsLoadingMovies] = useState(true);
 
   const [editingName, setEditingName] = useState(user?.username || "");
   const [isEditing, setIsEditing] = useState(false);
-  const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+
+  
 
   const handleLogout = async () => {
     try {
@@ -39,41 +49,57 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
-    if (!token) return;
-    const fetchData = async () => {
-      try {
-        const data = await fetchFavorites(token);
-        const movies = await getMoviesByIds(data.favorites);
-        setFavorites(movies);
-      } catch (err) {
-        console.error("Error fetching favorites:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [token]);
+    if (
+      favoriteIdsResponse?.favorites &&
+      favoriteIdsResponse.favorites.length > 0
+    ) {
+      setIsLoadingMovies(true);
+      getMoviesByIds(favoriteIdsResponse.favorites)
+        .then((movies) => {
+          setFavorites(movies);
+        })
+        .catch((err) => {
+          console.error("Error fetching movies by ID:", err);
+        })
+        .finally(() => {
+          setIsLoadingMovies(false);
+        });
+    } else if (
+      favoriteIdsResponse &&
+      favoriteIdsResponse.favorites.length === 0
+    ) {
+      setFavorites([]);
+      setIsLoadingMovies(false);
+    }
+  }, [favoriteIdsResponse]);
+
+  const updateUsernameMutation = useUpdateUsernameMutation();
 
   const handleSave = async () => {
     if (!editingName.trim()) {
       setMessage("Name cannot be empty");
       return;
     }
-    
-    setSaving(true);
-    setMessage("");
-
-    try {
-      const data = await updateUsername(editingName, token!);
-      setUser(data.user);
-      setMessage("Name updated successfully!");
-      setIsEditing(false);
-    } catch (err: any) {
-      console.error(err);
-      setMessage(err.message || "Error updating name");
-    } finally {
-      setSaving(false);
+    if (!token) {
+      setMessage("Authorization token missing.");
+      return;
     }
+
+    updateUsernameMutation.mutate(
+      { newName: editingName, token },
+      {
+        onSuccess: (data) => {
+          setUser(data.user);
+          console.log(data)
+          setMessage("Name updated successfully!");
+          setIsEditing(false);
+        },
+        onError: (err: any) => {
+          console.error(err);
+          setMessage(err.message || "Error updating name");
+        },
+      }
+    );
   };
 
   if (!user) {
@@ -93,6 +119,12 @@ export default function ProfilePage() {
     );
   }
 
+  const isDataLoading = isLoadingFavorites || isLoadingMovies;
+  const isSaving = updateUsernameMutation.isPending;
+  const usernameUpdateError = updateUsernameMutation.isError
+    ? updateUsernameMutation.error.message
+    : "";
+
   return (
     <div className="container mx-auto min-h-screen flex flex-col lg:flex-row gap-6 items-start justify-start text-foreground bg-background px-6 md:py-12">
       <div className="border border-border rounded-xl p-6 shadow-lg w-full lg:max-w-[450px] bg-card">
@@ -107,8 +139,10 @@ export default function ProfilePage() {
           </button>
         </div>
         <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-          <div className="flex-shrink-0 w-24 h-24 rounded-full bg-accent/20 flex items-center 
-          justify-center text-4xl font-bold text-accent shadow-inner">
+          <div
+            className="flex-shrink-0 w-24 h-24 rounded-full bg-accent/20 flex items-center 
+          justify-center text-4xl font-bold text-accent shadow-inner"
+          >
             {user.username.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1 flex flex-col gap-2 w-full">
@@ -133,10 +167,10 @@ export default function ProfilePage() {
                   />
                   <button
                     onClick={handleSave}
-                    disabled={saving}
+                    disabled={isSaving}
                     className="px-4 py-1 bg-accent text-white rounded-md hover:bg-accent-hover transition"
                   >
-                    {saving ? "Saving..." : "Save"}
+                    {isSaving ? "Saving..." : "Save"}
                   </button>
                   <button
                     onClick={() => {
@@ -149,8 +183,14 @@ export default function ProfilePage() {
                     Cancel
                   </button>
                 </div>
-                {message && (
-                  <p className="text-sm text-success mt-1">{message}</p>
+                {(message || usernameUpdateError) && (
+                  <p
+                    className={`text-sm mt-1 ${
+                      usernameUpdateError ? "text-error" : "text-success"
+                    }`}
+                  >
+                    {message || usernameUpdateError}
+                  </p>
                 )}
               </div>
             )}
@@ -163,7 +203,7 @@ export default function ProfilePage() {
           Favorite Movies
         </h2>
 
-        {loading ? (
+        {isDataLoading ? (
           <p className="text-center text-foreground/60">Loading...</p>
         ) : favorites.length === 0 ? (
           <p className="text-center text-foreground/60">
