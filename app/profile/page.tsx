@@ -6,10 +6,9 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
 import { getMoviesByIds } from "@/lib/api/tmdb";
+import { fetchFavorites } from "@/lib/api/favorite";
 import { updateUsername } from "@/lib/api/user";
 import { signOut } from "next-auth/react";
-
-
 
 interface FavoriteMovie {
   id: number;
@@ -41,14 +40,9 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (!token) return;
-    const fetchFavorites = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch("/api/favorite", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-        if (!res.ok) return;
-
+        const data = await fetchFavorites(token);
         const movies = await getMoviesByIds(data.favorites);
         setFavorites(movies);
       } catch (err) {
@@ -57,7 +51,7 @@ export default function ProfilePage() {
         setLoading(false);
       }
     };
-    fetchFavorites();
+    fetchData();
   }, [token]);
 
   const handleSave = async () => {
@@ -65,7 +59,7 @@ export default function ProfilePage() {
       setMessage("Name cannot be empty");
       return;
     }
-
+    
     setSaving(true);
     setMessage("");
 
