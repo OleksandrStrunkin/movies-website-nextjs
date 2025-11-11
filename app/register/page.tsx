@@ -1,15 +1,23 @@
 "use client";
+
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+
 import { registerUser } from "@/lib/api/auth";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useGoogleSync } from "@/lib/hook/useGoogleSync";
+import { signIn, signOut, useSession } from "next-auth/react";
+
 
 export default function RegisterPage() {
   const router = useRouter();
 
   const { setUser, setToken } = useAuthStore();
+
+  const { data: session } = useSession();
+  useGoogleSync();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -23,8 +31,7 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-
-      const data = await registerUser(username, email, password)
+      const data = await registerUser(username, email, password);
 
       setUser(data.user);
       setToken(data.token);
@@ -61,7 +68,7 @@ export default function RegisterPage() {
 
         <div className="flex flex-col gap-2">
           <label htmlFor="email" className="text-sm text-color-text/80">
-            Username
+            Name
           </label>
           <input
             id="text"
@@ -98,21 +105,40 @@ export default function RegisterPage() {
             required
           />
         </div>
-
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2 bg-accent text-accent-foreground rounded-md hover:opacity-90 transition cursor-pointer"
+          className="w-full py-2 bg-accent flex justify-center text-white rounded-md hover:opacity-90 transition cursor-pointer"
         >
-          {loading ? "Creating..." : "Sign Up"}
+          {loading ? (
+            <span className="animate-spin w-8 h-8 border-4 border-white border-t-transparent rounded-full" />
+          ) : (
+            "Sign Up"
+          )}
         </button>
-
-        <p className="text-sm text-center mt-4 text-muted-foreground">
+        <p className="text-sm text-center text-muted-foreground">
           Already have an account?{" "}
           <Link href="/login" className="text-accent hover:underline">
             Log in
           </Link>
         </p>
+        {!session ? (
+          <button
+            type="button"
+            onClick={() => signIn("google")}
+            className="px-4 py-2 bg-blue-400 text-white rounded-md hover:bg-blue-500 transition cursor-pointer"
+          >
+            Sign in with Google
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => signOut()}
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition cursor-pointer"
+          >
+            Sign out
+          </button>
+        )}
       </motion.form>
     </div>
   );

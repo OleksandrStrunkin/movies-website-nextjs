@@ -30,3 +30,21 @@ export async function registerUser(
 
   return data;
 }
+
+interface GoogleSyncData {
+  email: string;
+  username: string;
+}
+
+export async function syncGoogleUser(data: GoogleSyncData) {
+  const res = await fetch("/api/auth/google-login", {
+    method: "POST",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.error || "Failed to sync Google user.");
+  }
+  return res.json();
+}
