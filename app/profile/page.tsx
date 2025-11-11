@@ -15,7 +15,6 @@ import { useFavoriteMoviesQuery } from "@/lib/hook/queries/useFavoriteMoviesQuer
 
 export default function ProfilePage() {
   const { user, setUser, logout, token } = useAuthStore();
-  console.log(user)
   const router = useRouter();
 
   const {
@@ -59,7 +58,6 @@ export default function ProfilePage() {
       {
         onSuccess: (data) => {
           setUser({...user!, username: data.username || user!.username});
-          console.log(data)
           setMessage("Name updated successfully!");
           setIsEditing(false);
         },

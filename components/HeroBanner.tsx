@@ -28,7 +28,7 @@ export default function HeroBanner({ movies }: HeroBannerProps) {
           >
             <Image
               src={`https://image.tmdb.org/t/p/w500${heroMovie.poster_path}`}
-              alt={heroMovie.title}
+              alt={heroMovie.title || "movie image"}
               width={280}
               height={420}
               className="rounded-lg shadow-lg hidden md:block"

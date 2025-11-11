@@ -24,7 +24,7 @@ export default async function MoviePage({
       <div className="relative w-full h-[100vh] flex items-start">
         <Image
           src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-          alt={movie.title}
+          alt={movie.title || "Movie image"}
           fill
           className="object-cover opacity-40"
         />
@@ -33,7 +33,7 @@ export default async function MoviePage({
             <div className="relative hidden md:block max-w-[320px] aspect-[2/3] overflow-hidden">
               <Image
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
+                alt={movie.title || "Movie image"}
                 width={320}
                 height={480}
                 className="object-cover"

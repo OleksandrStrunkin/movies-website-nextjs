@@ -48,7 +48,6 @@ export default function Card({ movie, genres }: CardProps) {
       });
 
       const data = await res.json();
-      console.log("Added to favorites:", data);
       setIsFavorite(data.message === "Added to favorites");
     } catch (err) {
       console.error("Error adding favorite:", err);
@@ -70,7 +69,7 @@ export default function Card({ movie, genres }: CardProps) {
         <div className="relative w-full overflow-hidden rounded-t-xl cursor-pointer bg-card aspect-[2/3]">
           <Image
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-            alt={movie.title}
+            alt={movie.title || "movie image"}
             className="absolute inset-0 object-cover group-hover:blur-sm group-hover:brightness-50 transition-all duration-300"
             fill={true}
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
