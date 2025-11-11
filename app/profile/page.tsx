@@ -2,21 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
-import { getMoviesByIds } from "@/lib/api/tmdb";
 
 import { signOut } from "next-auth/react";
 
 import { useFavoritesQuery } from "@/lib/hook/queries/useFavoritesQuery";
 import { useUpdateUsernameMutation } from "@/lib/hook/mutations/useUpdateUsernameMutation";
+import { useFavoriteMoviesQuery } from "@/lib/hook/queries/useFavoriteMoviesQuery";
 
-interface FavoriteMovie {
-  id: number;
-  poster_path?: string | null;
-  title: string;
-}
 
 export default function ProfilePage() {
   const { user, setUser, logout, token } = useAuthStore();
@@ -26,18 +21,16 @@ export default function ProfilePage() {
   const {
     data: favoriteIdsResponse,
     isLoading: isLoadingFavorites,
-    isError: isErrorFavorites,
-    error: errorFavorites,
   } = useFavoritesQuery({ token });
-
-  const [favorites, setFavorites] = useState<FavoriteMovie[]>([]);
-  const [isLoadingMovies, setIsLoadingMovies] = useState(true);
 
   const [editingName, setEditingName] = useState(user?.username || "");
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState("");
 
-  
+  const {
+    data: favorites,
+    isLoading: isLoadingMovies,
+  } = useFavoriteMoviesQuery(favoriteIdsResponse?.favorites);
 
   const handleLogout = async () => {
     try {
@@ -48,31 +41,6 @@ export default function ProfilePage() {
       console.error("Logout error:", err);
     }
   };
-
-  useEffect(() => {
-    if (
-      favoriteIdsResponse?.favorites &&
-      favoriteIdsResponse.favorites.length > 0
-    ) {
-      setIsLoadingMovies(true);
-      getMoviesByIds(favoriteIdsResponse.favorites)
-        .then((movies) => {
-          setFavorites(movies);
-        })
-        .catch((err) => {
-          console.error("Error fetching movies by ID:", err);
-        })
-        .finally(() => {
-          setIsLoadingMovies(false);
-        });
-    } else if (
-      favoriteIdsResponse &&
-      favoriteIdsResponse.favorites.length === 0
-    ) {
-      setFavorites([]);
-      setIsLoadingMovies(false);
-    }
-  }, [favoriteIdsResponse]);
 
   const updateUsernameMutation = useUpdateUsernameMutation();
 
