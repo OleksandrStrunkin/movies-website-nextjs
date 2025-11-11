@@ -8,8 +8,10 @@ export default async function MoviePage({
   params,
 }: {
   params: { id: string };
-}) {
-  const movie: MovieDetailsResponse = await getMovieDetails(params.id);
+  }) {
+  const { id } = await params;
+  
+  const movie: MovieDetailsResponse = await getMovieDetails(id);
 
   const trailer = movie.videos?.results.find(
     (video) => video.type === "Trailer" && video.site === "YouTube"
@@ -122,4 +124,4 @@ export default async function MoviePage({
       </div>
     </section>
   );
-};
+}
