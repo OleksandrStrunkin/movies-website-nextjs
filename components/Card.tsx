@@ -7,11 +7,13 @@ import Link from "next/link";
 import { Movie } from "@/lib/types/movie";
 import {
   PlayIcon,
-  HeartIcon,
   BookmarkIcon,
   StarIcon,
 } from "@heroicons/react/24/solid";
+import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
 import { PhotoIcon } from "@heroicons/react/24/outline";
+import { useFavoriteMutation } from "@/lib/hook/mutations/useFavoriteMutation";
 
 interface CardProps {
   movie: Movie;
@@ -19,8 +21,11 @@ interface CardProps {
 }
 
 export default function Card({ movie, genres }: CardProps) {
+   const { token } = useAuthStore();
   const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const { mutateAsync, isPending } = useFavoriteMutation();
 
   const genresNames = movie.genre_ids
     .slice(0, 2)
@@ -31,32 +36,19 @@ export default function Card({ movie, genres }: CardProps) {
   const handleFavorite = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    const token = useAuthStore.getState().token;
     if (!token) {
       alert("Please log in first.");
       return;
     }
 
     try {
-      const res = await fetch("/api/favorite", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ movieId: movie.id }),
-      });
-
-      const data = await res.json();
+      const data = await mutateAsync({ movieId: movie.id, token });
       setIsFavorite(data.message === "Added to favorites");
     } catch (err) {
-      console.error("Error adding favorite:", err);
-    } finally {
-      setLoading(false)
+      console.error("❌ Error toggling favorite:", err);
     }
   };
 
-  
   return (
     <>
       <Link
@@ -92,14 +84,14 @@ export default function Card({ movie, genres }: CardProps) {
             <button
               onClick={handleFavorite}
               title="Favorite"
-              disabled={loading}
-              className={`p-2 rounded-full cursor-pointer transition-all duration-300 ${
-                isFavorite
-                  ? "bg-red-500 hover:bg-red-600"
-                  : "bg-accent/30 hover:bg-accent-hover"
-              }`}
+              disabled={isPending}
+              className="p-2 rounded-full bg-accent/30 hover:bg-accent-hover transition-all duration-300"
             >
-              <HeartIcon className="w-5 h-5 text-white" />
+              {isFavorite ? (
+                <HeartSolid className="w-5 h-5 text-white" />
+              ) : (
+                <HeartOutline className="w-5 h-5 text-white" />
+              )}
             </button>
             <button
               title="Look later"
