@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useAuthStore } from "@/store/useAuthStore";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { motion, AnimatePresence } from "framer-motion";
@@ -36,7 +37,9 @@ export default function FavoriteMovieCard({ movie }: FavoriteMovieCardProps) {
     .map((genre) => genre.name)
     .join(", ");
 
-  const handleRemoveWithAnimation = () => {
+  const handleRemoveWithAnimation = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (!token) {
       console.error("Authentication required to remove favorites.");
       return;
@@ -47,7 +50,7 @@ export default function FavoriteMovieCard({ movie }: FavoriteMovieCardProps) {
   };
 
   return (
-    <div
+    <Link href={`/movie/${movie.id}`}
       className="flex flex-col sm:flex-row bg-card border border-border rounded-xl overflow-hidden shadow-sm
                  hover:shadow-md transition-all duration-300"
     >
@@ -107,6 +110,6 @@ export default function FavoriteMovieCard({ movie }: FavoriteMovieCardProps) {
           </AnimatePresence>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

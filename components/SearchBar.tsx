@@ -45,7 +45,7 @@ export default function SearchBar() {
       <button
         type="button"
         onClick={toggleSearch}
-        className="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors"
+        className="md:hidden p-2 rounded-full hover:bg-accent/10 transition-colors duration-300"
       >
         <MagnifyingGlassIcon className="h-6 w-6" />
       </button>
@@ -68,7 +68,7 @@ export default function SearchBar() {
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:bg-accent/10"
           >
             <XMarkIcon className="w-5 h-5" />
           </button>
@@ -85,7 +85,7 @@ export default function SearchBar() {
                   <li key={movie.id}>
                     <Link
                       href={`/movie/${movie.id}`}
-                      className="flex items-center gap-3 p-2 rounded-md hover:bg-gray-100 transition"
+                      className="flex items-center gap-3 p-2 rounded-md hover:bg-accent/10 transition"
                       onClick={() => setTerm("")}
                     >
                       {movie.poster_path ? (
@@ -147,7 +147,7 @@ export default function SearchBar() {
                 setIsSearchOpen(false);
                 setTerm("");
               }}
-              className="p-2 hover:bg-gray-100 rounded-full"
+              className="p-2 hover:bg-accent/10 rounded-full"
               aria-label="Close search"
             >
               <XMarkIcon className="w-6 h-6" />
