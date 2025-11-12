@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useAuthStore } from "@/store/useAuthStore";
 import FavoriteMovieCard from "@/components/FavoriteMovieCard";
 
@@ -13,17 +11,13 @@ import { useFavoriteMoviesQuery } from "@/lib/hook/queries/useFavoriteMoviesQuer
 export default function ProfilePage() {
   const { user, token } = useAuthStore();
 
-  const {
-    data: favoriteIdsResponse,
-    isLoading: isLoadingFavorites,
-  } = useFavoritesQuery({ token });
+  const { data: favoriteIdsResponse, isLoading: isLoadingFavorites } =
+    useFavoritesQuery({ token });
 
-  const {
-    data: favorites,
-    isLoading: isLoadingMovies,
-  } = useFavoriteMoviesQuery(favoriteIdsResponse?.favorites);
+  const { data: favorites, isLoading: isLoadingMovies } =
+    useFavoriteMoviesQuery(favoriteIdsResponse?.favorites);
 
-  console.log(favorites)
+  console.log(favorites);
   if (!user) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background text-foreground z-[9999]">
