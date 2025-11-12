@@ -26,17 +26,11 @@ export default function ProfilePage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center text-foreground bg-background">
-        <div className="bg-card border border-border rounded-xl p-8 shadow-lg w-full max-w-md text-center">
-          <p className="text-foreground/70 mb-4">You are not logged in.</p>
-          <button
-            onClick={() => router.push("/login")}
-            className="px-4 py-2 bg-accent text-white rounded-md hover:bg-accent-hover transition"
-          >
-            Go to Login
-          </button>
+      <div className="fixed inset-0 flex items-center justify-center bg-background text-foreground z-[9999]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin w-10 h-10 border-4 border-accent border-t-transparent rounded-full" />
+          <span className="font-medium text-muted">Loading...</span>
         </div>
-        
       </div>
     );
   }

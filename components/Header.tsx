@@ -5,16 +5,20 @@ import SearchBar from "./SearchBar";
 import { useAuthStore } from "@/store/useAuthStore";
 import { signOut } from "next-auth/react";
 import { UserIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [isPending, startTransition] = useTransition();
   const [theme, setTheme] = useState<"light" | "dark" | null>(null);
   const { user, token, logout } = useAuthStore();
 
+  const router = useRouter();
+
   const handleLogout = async () => {
     try {
       logout();
       await signOut({ redirect: false });
+      router.push("/");
     } catch (err) {
       console.error("Logout error:", err);
     }
