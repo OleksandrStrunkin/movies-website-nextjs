@@ -3,8 +3,10 @@
 import Card from "@/components/Card";
 import { useFavoritesQuery } from "@/lib/hook/queries/useFavoritesQuery";
 import { useAuthStore } from "@/store/useAuthStore";
+import { Movie } from "@/lib/types/movie";
 
-export default function SearchResultsClient({ movies }: { movies: any[] }) {
+
+export default function SearchResultsClient({ movies }: { movies: Movie[] }) {
   const { token } = useAuthStore();
   const { data: favoriteIdsResponse } = useFavoritesQuery({ token });
   const favoriteIds = favoriteIdsResponse?.favorites ?? [];
