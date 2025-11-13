@@ -25,10 +25,34 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+    const validatePassword = (pwd: string): string | null => {
+      if (pwd.length < 8) {
+        return "Password must be at least 8 characters long.";
+      }
+      if (!/[A-Z]/.test(pwd)) {
+        return "Password must contain at least one uppercase letter.";
+      }
+      if (!/[a-z]/.test(pwd)) {
+        return "Password must contain at least one lowercase letter.";
+      }
+      if (!/\d/.test(pwd)) {
+        return "Password must contain at least one digit (0-9).";
+      }
+      return null;
+    };
+
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
+
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setError(passwordError);
+      setLoading(false);
+      return;
+    }
 
     try {
       const data = await registerUser(username, email, password);
