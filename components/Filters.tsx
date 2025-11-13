@@ -6,8 +6,8 @@ interface FiltersProps {
   genres: { id: number; name: string }[];
   selectedGenreId: number;
   handleGenreChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  selectedType: string;
-  handleTypeChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  // selectedType: string;
+  // handleTypeChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   selectedYear: string;
   handleYearChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   years: number[];
@@ -17,8 +17,8 @@ export default function Filters({
   genres,
   selectedGenreId,
   handleGenreChange,
-  selectedType,
-  handleTypeChange,
+  // selectedType,
+  // handleTypeChange,
   selectedYear,
   handleYearChange,
   years,
@@ -54,7 +54,7 @@ export default function Filters({
       </SelectWrapper>
 
       {/* Type */}
-      <SelectWrapper>
+      {/* <SelectWrapper>
         <select
           value={selectedType}
           onChange={handleTypeChange}
@@ -63,7 +63,7 @@ export default function Filters({
           <option value="movie">Movies</option>
           <option value="tv">Series</option>
         </select>
-      </SelectWrapper>
+      </SelectWrapper> */}
 
       {/* Year */}
       <SelectWrapper>
