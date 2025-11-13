@@ -2,7 +2,6 @@ import { POST } from "../login/route";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "@/lib/models/User";
-import { connectDB } from "@/lib/mongodb";
 
 jest.mock("next/server", () => ({
   NextResponse: {

@@ -1,7 +1,6 @@
 import { POST, GET } from "../../favorite/route";
 import jwt from "jsonwebtoken";
 import User from "@/lib/models/User";
-import { connectDB } from "@/lib/mongodb";
 
 jest.mock("@/lib/mongodb", () => ({
   connectDB: jest.fn().mockResolvedValue(true),

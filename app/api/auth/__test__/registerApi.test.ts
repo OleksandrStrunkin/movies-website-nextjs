@@ -1,6 +1,5 @@
 import { POST } from "../register/route";
 import bcrypt from "bcrypt";
-import { connectDB } from "@/lib/mongodb";
 
 jest.mock("next/server", () => ({
   NextResponse: {
@@ -18,9 +17,9 @@ jest.mock("@/lib/mongodb", () => ({
 jest.mock("@/lib/models/User", () => {
   const saveMock = jest.fn();
   const UserMock = jest.fn().mockImplementation(() => ({ save: saveMock }));
-  // @ts-ignore
+  // @ts-expect-error: TS error due to temporary type mismatch
   UserMock.findOne = jest.fn();
-  // @ts-ignore
+  // @ts-expect-error: TS error due to temporary type mismatch
   UserMock.__saveMock = saveMock;
   return UserMock;
 });
