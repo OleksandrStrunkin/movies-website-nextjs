@@ -49,7 +49,7 @@ export default function UserProfileCard({ user }: UserProfileCardProps) {
           setMessage("Name updated successfully!");
           setIsEditing(false);
         },
-        onError: (err: any) => {
+        onError: (err) => {
           console.error(err);
           setMessage(err.message || "Error updating name");
         },

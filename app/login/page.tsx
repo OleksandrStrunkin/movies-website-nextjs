@@ -35,8 +35,12 @@ export default function LoginPage() {
       setToken(data.token);
 
       router.push("/profile");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
     } finally {
       setLoading(false);
     }
@@ -100,7 +104,7 @@ export default function LoginPage() {
           )}
         </button>
         <p className="text-sm text-center text-muted-foreground">
-          Don't have an account yet?{" "}
+          Don&apos;t have an account yet?{" "}
           <Link href="/register" className="text-accent hover:underline">
             Sign up
           </Link>

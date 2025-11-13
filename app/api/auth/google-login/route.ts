@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       user,
       token,
     });
-  } catch (err: any) {
+  } catch (err) {
     console.error("Google login error:", err);
     return NextResponse.json(
       { error: "Internal server error" },

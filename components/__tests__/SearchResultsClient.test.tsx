@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import SearchResultsClient from "../SearchResultsClient";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useFavoritesQuery } from "@/lib/hook/queries/useFavoritesQuery";
-import Card from "@/components/Card";
 
 jest.mock("@/store/useAuthStore");
 jest.mock("@/lib/hook/queries/useFavoritesQuery");
@@ -21,8 +20,8 @@ describe("SearchResultsClient", () => {
   });
 
   it("renders all movies", () => {
-    (useAuthStore as jest.Mock).mockReturnValue({ token: "abc" });
-    (useFavoritesQuery as jest.Mock).mockReturnValue({
+    (useAuthStore as unknown as jest.Mock).mockReturnValue({ token: "abc" });
+    (useFavoritesQuery as unknown as jest.Mock).mockReturnValue({
       data: { favorites: [2] },
     });
 
@@ -42,8 +41,8 @@ describe("SearchResultsClient", () => {
   });
 
   it("handles empty favorites", () => {
-    (useAuthStore as jest.Mock).mockReturnValue({ token: null });
-    (useFavoritesQuery as jest.Mock).mockReturnValue({ data: null });
+    (useAuthStore as unknown as jest.Mock).mockReturnValue({ token: null });
+    (useFavoritesQuery as unknown as jest.Mock).mockReturnValue({ data: null });
 
     const movies = [{ id: 1, title: "Movie 1" }];
 

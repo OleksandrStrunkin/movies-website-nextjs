@@ -16,7 +16,9 @@ export const tmdbApi = axios.create({
   },
 });
 
-export const fetchTrendingMovies = async (): Promise<MovieListResponse["results"]> => {
+export const fetchTrendingMovies = async (): Promise<
+  MovieListResponse["results"]
+> => {
   const response = await tmdbApi.get<MovieListResponse>("/trending/movie/week");
   return response.data.results;
 };
@@ -30,22 +32,17 @@ export const getGenres = async (): Promise<GenreListResponse["genres"]> => {
 
 export const getMoviesByGenres = async (
   genreIds: number[],
-  type: "movie" | "tv" = "movie",
   year?: number | "",
   page: number = 1
 ): Promise<MovieListResponse> => {
   const genresString = genreIds.join(",");
 
-  const res = await tmdbApi.get<MovieListResponse>(`/discover/${type}`, {
+  const res = await tmdbApi.get<MovieListResponse>(`/discover/movie`, {
     params: {
       language: "en-US",
       with_genres: genresString || undefined,
       sort_by: "popularity.desc",
-      ...(year
-        ? type === "movie"
-          ? { primary_release_year: year }
-          : { first_air_date_year: year }
-        : {}),
+      ...(year ? { primary_release_year: year } : {}),
       page,
     },
   });
@@ -62,7 +59,9 @@ export const getMovieDetails = async (movieId: string) => {
   return res.data;
 };
 
-export const getMoviesBySearch = async (query: string): Promise<MovieListResponse> => {
+export const getMoviesBySearch = async (
+  query: string
+): Promise<MovieListResponse> => {
   const res = await tmdbApi.get<MovieListResponse>("/search/movie", {
     params: {
       query,
@@ -82,7 +81,7 @@ export const getMoviesByIds = async (movieIds: number[]) => {
       })
     );
     const results = await Promise.allSettled(requests);
-    
+
     return results
       .filter(
         (r): r is PromiseFulfilledResult<AxiosResponse<MovieDetailsResponse>> =>

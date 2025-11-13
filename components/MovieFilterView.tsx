@@ -7,7 +7,6 @@ import SkeletonGrid from "./Skeleton/SkeletonGrid";
 interface MovieFilterViewProps {
   id: number;
   genres: { id: number; name: string }[];
-  type: "movie" | "tv";
   year?: number | "";
   page?: number;
 }
@@ -15,7 +14,6 @@ interface MovieFilterViewProps {
 export default function MovieFilterView({
   id,
   genres,
-  type,
   year,
   page = 1,
 }: MovieFilterViewProps) {
@@ -27,7 +25,6 @@ export default function MovieFilterView({
     isError,
   } = useMoviesByGenresQuery({
     genreIds,
-    type,
     year,
     page,
   });

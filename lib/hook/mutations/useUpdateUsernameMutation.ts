@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateUsername } from "@/lib/api/user";
-import { User } from "@/lib/types/users";
 
 interface UpdateUsernameVariables {
   newName: string;
@@ -16,7 +15,7 @@ export const useUpdateUsernameMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<UpdateUsernameResponse, Error, UpdateUsernameVariables>({
     mutationFn: ({ newName, token }) => updateUsername(newName, token),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["profile"] });
       
     },

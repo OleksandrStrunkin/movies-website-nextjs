@@ -88,7 +88,6 @@ export default function GenresSection() {
 
   const [selectedGenreId, setSelectedGenreId] = useState<number>(0);
   const [selectedYear, setSelectedYear] = useState<number | "">("");
-  const [selectedType, setSelectedType] = useState<"movie" | "tv">("movie");
 
   const [page, setPage] = useState<number>(1);
   const totalPages = TOTAL_PAGES_PLACEHOLDER;
@@ -139,7 +138,7 @@ export default function GenresSection() {
       <MovieFilterView
         id={selectedGenreId}
         genres={rawGenres}
-        type={selectedType}
+        
         year={selectedYear}
         page={page}
       />
