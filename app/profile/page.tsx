@@ -17,7 +17,6 @@ export default function ProfilePage() {
   const { data: favorites, isLoading: isLoadingMovies } =
     useFavoriteMoviesQuery(favoriteIdsResponse?.favorites);
 
-  console.log(favorites);
   if (!user) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background text-foreground z-[9999]">
