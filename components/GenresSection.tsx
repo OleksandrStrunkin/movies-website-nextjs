@@ -44,7 +44,6 @@ const PaginationButtons = ({
   totalPages,
   setPage,
 }: PaginationProps) => {
-  // Використовуємо useMemo, щоб не перераховувати список сторінок при кожному рендері
   const pages = useMemo(
     () => getPaginationPages(currentPage, totalPages),
     [currentPage, totalPages]

@@ -1,5 +1,5 @@
 import { getMoviesBySearch } from "@/lib/api/tmdb";
-import Card from "@/components/Card";
+import SearchResultsClient from "@/components/SearchResultsClient";
 
 export default async function SearchPage({
   searchParams,
@@ -16,11 +16,7 @@ export default async function SearchPage({
     <main className="p-6 container mx-auto">
       <h2 className="text-2xl font-semibold mb-4">Results for “{query}”</h2>
       {movies.results.length ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-          {movies.results.map((m) => (
-            <Card key={m.id} movie={m} />
-          ))}
-        </div>
+        <SearchResultsClient movies={movies.results} />
       ) : (
         <p>No results found.</p>
       )}

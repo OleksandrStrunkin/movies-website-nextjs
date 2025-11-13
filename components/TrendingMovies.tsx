@@ -2,6 +2,8 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, A11y } from "swiper/modules";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { useFavoritesQuery } from "@/lib/hook/queries/useFavoritesQuery";
+import { useAuthStore } from "@/store/useAuthStore";
 import Card from "./Card";
 
 import { Movie } from "@/lib/types/movie";
@@ -16,6 +18,12 @@ interface TrendingMoviesProps {
 }
 
 export default function TrendingMovies({ movies }: TrendingMoviesProps) {
+
+  const { token } = useAuthStore();
+    const { data: favoriteIdsResponse } = useFavoritesQuery({ token });
+    const favoriteIds = favoriteIdsResponse?.favorites ?? [];
+  
+    const favoriteSet = new Set(favoriteIds);
 
   if (!movies || movies.length === 0) {
     return <div>failed to download movies</div>;
@@ -65,7 +73,7 @@ export default function TrendingMovies({ movies }: TrendingMoviesProps) {
       >
         {movies.map((movie) => (
           <SwiperSlide key={movie.id} className="max-h-[450px]">
-            <Card movie={movie} />
+            <Card movie={movie} isFavorite={favoriteSet.has(movie.id)} />
           </SwiperSlide>
         ))}
       </Swiper>

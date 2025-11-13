@@ -1,4 +1,6 @@
 import { useMoviesByGenresQuery } from "@/lib/hook/queries/useMoviesByGenresQuery";
+import { useFavoritesQuery } from "@/lib/hook/queries/useFavoritesQuery";
+import { useAuthStore } from "@/store/useAuthStore";
 import Card from "./Card";
 import SkeletonGrid from "./Skeleton/SkeletonGrid";
 
@@ -30,6 +32,12 @@ export default function MovieFilterView({
     page,
   });
 
+  const { token } = useAuthStore();
+  const { data: favoriteIdsResponse } = useFavoritesQuery({ token });
+  const favoriteIds = favoriteIdsResponse?.favorites ?? [];
+
+  const favoriteSet = new Set(favoriteIds);
+
   if (isLoading) {
     return <SkeletonGrid count={20} />;
   }
@@ -50,7 +58,12 @@ export default function MovieFilterView({
     <div>
       <ul className="mt-4 mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {movies.results.map((movie) => (
-          <Card key={movie.id} movie={movie} genres={genres} />
+          <Card
+            key={movie.id}
+            movie={movie}
+            genres={genres}
+            isFavorite={favoriteSet.has(movie.id)}
+          />
         ))}
       </ul>
     </div>

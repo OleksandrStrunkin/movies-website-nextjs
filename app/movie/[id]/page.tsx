@@ -28,7 +28,7 @@ export default async function MoviePage({
           src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
           alt={movie.title || "Movie image"}
           fill
-          className="object-cover opacity-40"
+          className="object-cover opacity-40 hidden xl:block"
         />
         <div className="relative z-10 mx-auto px-6 pb-10 mt-10 bg-card/80">
           <div className="flex flex-col md:flex-row gap-8">
