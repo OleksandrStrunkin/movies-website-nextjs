@@ -1,11 +1,8 @@
-// app/api/auth/__test__/updateUserApi.test.ts
 import { PUT } from "../../profile/route";
-import { NextResponse } from "next/server";
 import User from "@/lib/models/User";
-import { connectDB } from "@/lib/mongodb";
 import jwt from "jsonwebtoken";
 
-// 🧩 Моки
+
 jest.mock("@/lib/mongodb", () => ({
   connectDB: jest.fn(),
 }));

@@ -1,13 +1,10 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { ChangeEvent } from "react";
 
-
 interface FiltersProps {
   genres: { id: number; name: string }[];
   selectedGenreId: number;
   handleGenreChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  // selectedType: string;
-  // handleTypeChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   selectedYear: string;
   handleYearChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   years: number[];
@@ -17,8 +14,6 @@ export default function Filters({
   genres,
   selectedGenreId,
   handleGenreChange,
-  // selectedType,
-  // handleTypeChange,
   selectedYear,
   handleYearChange,
   years,
@@ -53,19 +48,6 @@ export default function Filters({
         </select>
       </SelectWrapper>
 
-      {/* Type */}
-      {/* <SelectWrapper>
-        <select
-          value={selectedType}
-          onChange={handleTypeChange}
-          className={baseSelect}
-        >
-          <option value="movie">Movies</option>
-          <option value="tv">Series</option>
-        </select>
-      </SelectWrapper> */}
-
-      {/* Year */}
       <SelectWrapper>
         <select
           value={selectedYear}

@@ -108,9 +108,6 @@ export default function GenresSection() {
   const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     setSelectedYear(e.target.value ? Number(e.target.value) : "");
 
-  // const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
-  //   setSelectedType(e.target.value as "movie" | "tv");
-
   const handleSetPage = (newPage: number) => {
     setPage(Math.max(1, Math.min(newPage, totalPages)));
   };
@@ -134,8 +131,6 @@ export default function GenresSection() {
         genres={genres}
         selectedGenreId={selectedGenreId}
         handleGenreChange={handleGenreChange}
-        // selectedType={selectedType}
-        // handleTypeChange={handleTypeChange}
         selectedYear={selectedYear.toString()}
         handleYearChange={handleYearChange}
         years={years}
@@ -167,7 +162,7 @@ export default function GenresSection() {
           disabled={page === totalPages}
           className="p-2 border border-border rounded-md hover:bg-muted disabled:opacity-50 transition-colors"
         >
-        <ChevronRightIcon className="w-5 h-5" />
+          <ChevronRightIcon className="w-5 h-5" />
         </button>
       </div>
     </section>
