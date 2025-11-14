@@ -3,6 +3,13 @@ import { connectDB } from "@/lib/mongodb";
 import User from "@/lib/models/User";
 import jwt from "jsonwebtoken";
 
+interface JwtPayload {
+  id: string;
+  email?: string;
+  iat?: number;
+  exp?: number;
+}
+
 export async function PUT(req: Request) {
   try {
     await connectDB();
@@ -13,7 +20,7 @@ export async function PUT(req: Request) {
     }
 
     const token = authHeader.split(" ")[1];
-    const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
     const { username } = await req.json();
     if (!username) {

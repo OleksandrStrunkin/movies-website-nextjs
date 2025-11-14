@@ -12,26 +12,22 @@ const userSchema = new mongoose.Schema(
     toJSON: {
       virtuals: true,
       transform: function (doc, ret) {
-        // @ts-ignore
+        // @ts-expect-error: TS error due to temporary type mismatch
         delete ret._id;
-        // @ts-ignore
+        // @ts-expect-error: TS error due to temporary type mismatch
         delete ret.__v;
-        // @ts-ignore
         delete ret.googleId;
-        // @ts-ignore
         delete ret.password;
       },
     },
     toObject: {
       virtuals: true,
       transform: function (doc, ret) {
-        // @ts-ignore
+        // @ts-expect-error: TS error due to temporary type mismatch
         delete ret._id;
-        // @ts-ignore
+        // @ts-expect-error: TS error due to temporary type mismatch
         delete ret.__v;
-        // @ts-ignore
         delete ret.googleId;
-        // @ts-ignore
         delete ret.password;
       },
     },

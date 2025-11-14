@@ -18,7 +18,6 @@ interface CastMember {
 
 interface CreditsResponse {
   cast: CastMember[];
-  crew: any[];
 }
 
 interface MovieDetails {

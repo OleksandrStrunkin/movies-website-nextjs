@@ -1,5 +1,6 @@
 import { POST } from "../register/route";
 import bcrypt from "bcrypt";
+import User from "@/lib/models/User";
 
 jest.mock("next/server", () => ({
   NextResponse: {
@@ -14,6 +15,7 @@ jest.mock("@/lib/mongodb", () => ({
   connectDB: jest.fn(),
 }));
 
+
 jest.mock("@/lib/models/User", () => {
   const saveMock = jest.fn();
   const UserMock = jest.fn().mockImplementation(() => ({ save: saveMock }));
@@ -21,13 +23,14 @@ jest.mock("@/lib/models/User", () => {
   UserMock.findOne = jest.fn();
   // @ts-expect-error: TS error due to temporary type mismatch
   UserMock.__saveMock = saveMock;
-  return UserMock;
+  return {
+    __esModule: true,
+    default: UserMock,
+  };
 });
 
 jest.mock("bcrypt");
 
-const User =
-  require("@/lib/models/User").default || require("@/lib/models/User");
 
 describe("POST /api/auth/register", () => {
   beforeAll(() => {
